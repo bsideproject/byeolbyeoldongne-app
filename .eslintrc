@@ -1,0 +1,36 @@
+{
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "prettier",
+        "eslint:recommended",
+        "@react-native-community",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended", // React hooks rules
+        "plugin:prettier/recommended" // Prettier recommended rules
+    ],
+    "plugins": ["react", "prettier"],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "prettier/prettier": "error",
+        "react/react-in-jsx-scope": "off",
+        "no-param-reassign": "off",
+        "indent": ["error", 4]
+    },
+    "overrides": [
+        {
+            "files": ["src/**/*.{js,jsx}", "*.{js,jsx}"]
+        }
+    ]
+}
