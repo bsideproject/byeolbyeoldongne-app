@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 
-const GoogleMap = (props) => {
+const Map = (props) => {
     useEffect(() => {
         Geolocation.getCurrentPosition((position) => console.log(position));
     }, []);
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
     mapView: { width: '100%', height: '100%' },
 });
 
-export default GoogleMap;
+export default Map;
