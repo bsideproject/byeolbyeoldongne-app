@@ -59,5 +59,46 @@ $ yarn ios or yarn android
     ```
   
 
+### android
+- 빌드 세팅.
+
+    ```java
+    #./android/app/build.gradle
+
+    ...
+    dependencies {
+        ...
+        //dependencies 하위요소로 아래 세팅 추가.
+        implementation(project(':react-native-maps')){
+        exclude group: 'com.google.android.gms', module: 'play-services-base'
+        exclude group: 'com.google.android.gms', module: 'play-services-maps'
+        }
+        
+        implementation 'com.google.android.gms:play-services-base:17.2.1'
+        implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+        ...
+        ...
+    }
+    ```
+
+- Add google API Key
+
+    ```XML
+    #./android/app/src/main/AndroidManifest.xml
+    
+    <application>
+    <!-- application 태그 및의 자식속성으로 아래 아래의 태그들을 추가.-->
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value= "GOOGLE_API_KEY""/>  
+    <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
+    <activity>
+    ...
+    </application>
+    ```
+    구글 API_KEY 부분을 실제 키로 변경
+
 reference
 https://github.com/react-native-maps/react-native-maps/blob/master/docs/installation.md
