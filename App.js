@@ -1,29 +1,19 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import 'react-native-gesture-handler';
-import HomeScreen from './src/screens/Home';
-import MainScreen from './src/screens/Main';
-
-const Stack = createStackNavigator();
+import { StatusBar, Platform } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Route from './src/navigation/Route';
 
 const App = () => {
-    console.log('coco', process.env.NODE_ENV);
     return (
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen
-                    name="Home"
-                    component={HomeScreen}
-                    options={{ title: '홈 화면' }}
-                />
-                <Stack.Screen
-                    name="Main"
-                    component={MainScreen}
-                    options={{ title: '메인 화면' }}
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <SafeAreaProvider>
+            <StatusBar
+                barStyle={Platform.select({
+                    ios: 'dark-content',
+                    android: 'light-content',
+                })}
+            />
+            <Route />
+        </SafeAreaProvider>
     );
 };
 
