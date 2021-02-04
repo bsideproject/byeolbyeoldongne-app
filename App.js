@@ -12,7 +12,7 @@ const App = () => {
                     android: 'light-content',
                 })}
             />
-            <Route />
+            <Route/>
         </SafeAreaProvider>
     );
 };
