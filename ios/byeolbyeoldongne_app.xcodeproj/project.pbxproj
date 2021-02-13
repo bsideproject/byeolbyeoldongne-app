@@ -667,7 +667,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.byeolbyeoldongneapp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.byeolbyeoldongne-app";
 				PRODUCT_NAME = byeolbyeoldongne_app;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -689,7 +689,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.byeolbyeoldongneapp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.byeolbyeoldongne-app";
 				PRODUCT_NAME = byeolbyeoldongne_app;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

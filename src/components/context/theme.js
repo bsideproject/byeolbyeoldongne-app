@@ -5,6 +5,7 @@ export default {
         background: '#FFFFFF',
         boxShadow: 'rgba(101, 30, 216, 0.06)',
         subText: '#7E7E7E',
+        subBackground: '#E3E3E3',
     },
     font: {
         white: '#FFFFFF',

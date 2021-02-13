@@ -21,6 +21,7 @@
         "sourceType": "module"
     },
     "rules": {
+        "react-native/no-raw-text": "error",
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
         "react/prop-types": "off",

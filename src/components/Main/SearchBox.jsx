@@ -1,5 +1,11 @@
 import React from 'react';
-import { Image, StyleSheet, TextInput, View } from 'react-native';
+import {
+    Image,
+    StyleSheet,
+    TextInput,
+    View,
+    TouchableNativeFeedback,
+} from 'react-native';
 import theme from '../context/theme';
 
 const SearchBox = ({ searchText, handleChange, clear }) => {
@@ -13,24 +19,28 @@ const SearchBox = ({ searchText, handleChange, clear }) => {
                 style={styles.addressIcon}
                 source={require('../../static/images/icons/icon_address.png')}
             />
-
             <TextInput
                 returnKeyType="search"
                 style={styles.searchInput}
                 onChangeText={handleChange}
                 value={searchText}
-                // onSubmitEditing={() => console.log('submit')}
+                onSubmitEditing={() => console.log('submit')}
             />
-            <Image
-                style={styles.cancelIcon}
-                source={require('../../static/images/icons/input_cancel.png')}
-            />
+            {!!searchText && (
+                <TouchableNativeFeedback onPress={clear}>
+                    <Image
+                        style={styles.cancelIcon}
+                        source={require('../../static/images/icons/input_cancel.png')}
+                    />
+                </TouchableNativeFeedback>
+            )}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     search: {
+        position: 'relative',
         flex: 1,
         display: 'flex',
         flexDirection: 'row',
@@ -45,6 +55,7 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         fontSize: theme.font.size.large,
+        width: '100%',
     },
     gnbMenuIcon: {
         width: 19,
@@ -57,6 +68,9 @@ const styles = StyleSheet.create({
         marginRight: 6,
     },
     cancelIcon: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
         position: 'absolute',
         top: 15,
         right: 20,
