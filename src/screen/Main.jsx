@@ -4,13 +4,17 @@ import GoogleMap from '../components/MapView/MapView';
 import SearchBox from '../components/Main/SearchBox';
 import theme from '../components/context/theme';
 import BottomBar from '../components/Main/BottomBar';
+import { useSelector } from 'react-redux';
 
 const Main = () => {
     const [searchText, setSearchText] = useState('ddgasdgasdg');
 
+    const geolocation = useSelector((state) => state.geolocation);
+    const { currentCategories } = useSelector((state) => state.categories);
+    console.log(currentCategories);
     return (
         <View style={styles.main}>
-            <GoogleMap />
+            <GoogleMap geolocation={geolocation} />
             <View style={styles.searchBox}>
                 <SearchBox
                     searchText={searchText}
@@ -18,7 +22,7 @@ const Main = () => {
                     clear={() => setSearchText('')}
                 />
             </View>
-            <BottomBar />
+            <BottomBar currentCategories={currentCategories} />
         </View>
     );
 };

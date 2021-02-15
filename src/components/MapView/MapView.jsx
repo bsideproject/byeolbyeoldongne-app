@@ -1,13 +1,9 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { useSelector } from 'react-redux';
 
-const GoogleMap = (props) => {
-    const { latitude, longitude } = useSelector(
-        (state) => state.geolocation,
-        []
-    );
+const GoogleMap = ({ geolocation, ...props }) => {
+    const { latitude, longitude } = geolocation;
 
     return (
         <View style={styles.mapView}>

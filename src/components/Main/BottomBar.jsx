@@ -1,11 +1,21 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../context/theme';
+import CategoryButton from '../Buttons/CategoryButton';
 
-const BottomBar = ({ ...props }) => {
+const BottomBar = ({ currentCategories, ...props }) => {
     return (
         <View style={styles.bottomBar}>
-            <View style={styles.areaContent} />
+            <View style={styles.categories}>
+                {currentCategories.map((category) => {
+                    return (
+                        <CategoryButton
+                            key={category.name}
+                            category={category}
+                        />
+                    );
+                })}
+            </View>
             <View style={styles.divider} />
             <View style={styles.evaluationBar}>
                 <Text style={styles.evaluationBarText}>동네 거주 평점</Text>
@@ -24,11 +34,15 @@ const BottomBar = ({ ...props }) => {
                     />
                 </TouchableOpacity>
             </View>
-            <Image
-                style={styles.writingIcon}
-                source={require('../../static/images/icons/main_bottom_writing.png')}
-                transform={[{ translateX: -42.5 }]}
-            />
+            <View
+                style={styles.writingIconWrapper}
+                transform={[{ translateX: -32.5 }]}
+            >
+                <Image
+                    style={styles.writingIcon}
+                    source={require('../../static/images/icons/main_bottom_writing.png')}
+                />
+            </View>
         </View>
     );
 };
@@ -42,14 +56,24 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: '100%',
     },
-    writingIcon: {
+    writingIconWrapper: {
         position: 'absolute',
-        width: 85,
-        height: 85,
+        width: 65,
+        height: 65,
         top: -32.5,
         left: '50%',
+        overflow: 'hidden',
     },
-    areaContent: {
+    writingIcon: {
+        width: 65,
+        height: 95,
+    },
+    categories: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
         height: 130,
         backgroundColor: theme.color.background,
         shadowColor: '#000000',
@@ -57,6 +81,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.15,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
+        paddingLeft: '5%',
+        paddingRight: '5%',
+        paddingTop: 40,
+        paddingBottom: 15,
     },
     divider: {
         backgroundColor: theme.color.subBackground,
