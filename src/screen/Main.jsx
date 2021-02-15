@@ -21,6 +21,12 @@ const Main = () => {
                     handleChange={(text) => setSearchText(text)}
                     clear={() => setSearchText('')}
                 />
+                <View style={styles.currentLocation}>
+                    <Image
+                        style={styles.currentLocationIcon}
+                        source={require('../static/images/icons/current_location.png')}
+                    />
+                </View>
             </View>
             <BottomBar currentCategories={currentCategories} />
         </View>
@@ -33,9 +39,25 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         position: 'absolute',
-        top: 20,
+        top: 25,
         padding: 20,
         width: '100%',
+    },
+    currentLocation: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        width: 38,
+        height: 38,
+        borderRadius: 50,
+        bottom: -50,
+        right: 20,
+        backgroundColor: theme.color.background,
+    },
+    currentLocationIcon: {
+        width: 21,
+        height: 21,
     },
 });
 
