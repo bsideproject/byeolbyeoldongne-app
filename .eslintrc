@@ -28,7 +28,8 @@
         "prettier/prettier": "error",
         "react/react-in-jsx-scope": "off",
         "no-param-reassign": "off",
-        "indent": ["error", 4]
+        "indent": ["error", 4],
+        "no-shadow": "off"
     },
     "overrides": [
         {

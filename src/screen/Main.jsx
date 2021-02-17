@@ -1,24 +1,41 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import GoogleMap from '../components/MapView/MapView';
 import SearchBox from '../components/Main/SearchBox';
 import theme from '../components/context/theme';
 import BottomBar from '../components/Main/BottomBar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchLocationListAsync } from '../store/search';
+import SafeAreaView from 'react-native-safe-area-view';
 
-const Main = () => {
-    const [searchText, setSearchText] = useState('ddgasdgasdg');
+const Main = ({ navigation }) => {
+    const dispatch = useDispatch();
+    const [searchText, setSearchText] = useState('');
 
-    const geolocation = useSelector((state) => state.geolocation);
-    const { currentCategories } = useSelector((state) => state.categories);
-    console.log(currentCategories);
+    const { geolocation, categories, search } = useSelector((state) => {
+        const { geolocation, categories, search } = state;
+        return { geolocation, categories, search };
+    });
+    const { currentCategories } = categories;
+    const { fetchLocationList } = search;
+
+    const handleSearch = () => {
+        dispatch(fetchLocationListAsync(searchText));
+    };
+
+    const navigateSearchScreen = () => {
+        navigation.navigate('Search', { searchText });
+    };
+
     return (
-        <View style={styles.main}>
+        <SafeAreaView style={styles.main}>
             <GoogleMap geolocation={geolocation} />
             <View style={styles.searchBox}>
                 <SearchBox
                     searchText={searchText}
+                    handleClick={navigateSearchScreen}
                     handleChange={(text) => setSearchText(text)}
+                    handleSearch={handleSearch}
                     clear={() => setSearchText('')}
                 />
                 <View style={styles.currentLocation}>
@@ -29,7 +46,7 @@ const Main = () => {
                 </View>
             </View>
             <BottomBar currentCategories={currentCategories} />
-        </View>
+        </SafeAreaView>
     );
 };
 

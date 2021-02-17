@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Geolocation from '@react-native-community/geolocation';
 import Main from '../screen/Main';
 import Settings from '../screen/Settings';
+import Search from '../screen/Search';
 import { setCurrentGeolocation } from '../store/geolocation';
 
 const Stack = createStackNavigator();
@@ -23,6 +24,7 @@ const Route = () => {
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Main" headerMode="none">
                 <Stack.Screen name="Main" component={Main} />
+                <Stack.Screen name="Search" component={Search} />
                 <Stack.Screen name="Settings" component={Settings} />
             </Stack.Navigator>
         </NavigationContainer>

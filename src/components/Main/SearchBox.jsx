@@ -8,33 +8,41 @@ import {
 } from 'react-native';
 import theme from '../context/theme';
 
-const SearchBox = ({ searchText, handleChange, clear }) => {
+const SearchBox = ({
+    searchText,
+    handleClick,
+    handleChange,
+    handleSearch,
+    clear,
+}) => {
     return (
-        <View style={styles.search}>
-            <Image
-                style={styles.gnbMenuIcon}
-                source={require('../../static/images/icons/gnb_menu.png')}
-            />
-            <Image
-                style={styles.addressIcon}
-                source={require('../../static/images/icons/icon_address.png')}
-            />
-            <TextInput
-                returnKeyType="search"
-                style={styles.searchInput}
-                onChangeText={handleChange}
-                value={searchText}
-                onSubmitEditing={() => console.log('submit')}
-            />
-            {!!searchText && (
-                <TouchableNativeFeedback onPress={clear}>
-                    <Image
-                        style={styles.cancelIcon}
-                        source={require('../../static/images/icons/input_cancel.png')}
-                    />
-                </TouchableNativeFeedback>
-            )}
-        </View>
+        <TouchableNativeFeedback onPress={handleClick}>
+            <View style={styles.search}>
+                <Image
+                    style={styles.gnbMenuIcon}
+                    source={require('../../static/images/icons/gnb_menu.png')}
+                />
+                <Image
+                    style={styles.addressIcon}
+                    source={require('../../static/images/icons/icon_address.png')}
+                />
+                <TextInput
+                    returnKeyType="search"
+                    style={styles.searchInput}
+                    onChangeText={handleChange}
+                    value={searchText}
+                    onSubmitEditing={handleSearch}
+                />
+                {!!searchText && (
+                    <TouchableNativeFeedback onPress={clear}>
+                        <Image
+                            style={styles.cancelIcon}
+                            source={require('../../static/images/icons/input_cancel.png')}
+                        />
+                    </TouchableNativeFeedback>
+                )}
+            </View>
+        </TouchableNativeFeedback>
     );
 };
 

@@ -1,34 +1,47 @@
-import { createAction, handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
+import {
+    createFailureState,
+    createInitialState,
+    createPendingState,
+    createRequestThunk,
+    createRequestThunkTypes,
+    createSuccessState,
+} from './helper/reduxThunkHelper';
+import { fetchLocationList } from '../api/search';
 
 // action types
-const prefix = '@geolocation';
+const prefix = '@search';
 
-const SET_CURRENT_GEOLOCATION = `${prefix}/SET_CURRENT_GEOLOCATION`;
+const FETCH_LOCATION_LIST = createRequestThunkTypes(`${prefix}/FETCH_LOCATION_LIST`);
 
 // actions
-export const setCurrentGeolocation = createAction(
-    SET_CURRENT_GEOLOCATION,
-    (latitude, longitude) => {
-        return {
-            latitude,
-            longitude,
-        };
-    }
-);
+export const fetchLocationListAsync = (query) => {
+    return createRequestThunk({
+        actionType: FETCH_LOCATION_LIST.DEFAULT,
+        request: fetchLocationList,
+        params: query,
+    });
+};
 
 // initial region: 강남 사거리
 const initialState = {
-    latitude: 37.498126,
-    longitude: 127.059176,
+    fetchLocationList: createInitialState(),
 };
 
 // reducer
 export default handleActions(
     {
-        [SET_CURRENT_GEOLOCATION]: (state, action) => ({
+        [FETCH_LOCATION_LIST.PENDING]: (state) => ({
             ...state,
-            latitude: action.payload.latitude,
-            longitude: action.payload.longitude,
+            fetchLocationList: createPendingState(),
+        }),
+        [FETCH_LOCATION_LIST.SUCCESS]: (state, action) => ({
+            ...state,
+            fetchLocationList: createSuccessState(action.payload.data),
+        }),
+        [FETCH_LOCATION_LIST.FAILURE]: (state, action) => ({
+            ...state,
+            fetchLocationList: createFailureState(action.payload),
         }),
     },
     initialState

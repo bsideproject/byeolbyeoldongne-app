@@ -2,19 +2,27 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../context/theme';
 import CategoryButton from '../Buttons/CategoryButton';
+import NoMessage from '../Messages/NoMessage';
 
 const BottomBar = ({ currentCategories, ...props }) => {
     return (
         <View style={styles.bottomBar}>
             <View style={styles.categories}>
-                {currentCategories.map((category) => {
-                    return (
-                        <CategoryButton
-                            key={category.name}
-                            category={category}
-                        />
-                    );
-                })}
+                {currentCategories.length ? (
+                    currentCategories.map((category) => {
+                        return (
+                            <CategoryButton
+                                key={category.name}
+                                category={category}
+                            />
+                        );
+                    })
+                ) : (
+                    <NoMessage
+                        text="이 동네는 가까운 편의시설이 많지 않네요"
+                        imoji={require('../../static/images/imoji/imoji_cry.png')}
+                    />
+                )}
             </View>
             <View style={styles.divider} />
             <View style={styles.evaluationBar}>
@@ -68,13 +76,22 @@ const styles = StyleSheet.create({
         width: 65,
         height: 95,
     },
+    imojiIcon: {
+        width: 16,
+        height: 16,
+    },
+    noMessage: {
+        display: 'flex',
+        flexDirection: 'row',
+        padding: 10,
+    },
     categories: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        alignContent: 'center',
         flexWrap: 'wrap',
-        height: 130,
         backgroundColor: theme.color.background,
         shadowColor: '#000000',
         shadowOffset: { width: -10, height: 40 },

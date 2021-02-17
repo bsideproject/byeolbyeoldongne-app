@@ -11,8 +11,10 @@ export default {
     font: {
         white: '#FFFFFF',
         button: '#2326A8',
+        search: '#651CD9',
         size: {
             normal: 12,
+            middle: 14,
             large: 16,
             xxLarge: 26,
         },
