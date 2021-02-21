@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import theme from '../context/theme';
-import CategoryButton from '../Buttons/CategoryButton';
-import NoMessage from '../Messages/NoMessage';
+import theme from '../../../context/theme';
+import CategoryButton from '../../Buttons/CategoryButton';
+import NoMessage from '../../Messages/NoMessage';
 
 const BottomBar = ({ currentCategories, ...props }) => {
     return (
@@ -20,7 +20,7 @@ const BottomBar = ({ currentCategories, ...props }) => {
                 ) : (
                     <NoMessage
                         text="이 동네는 가까운 편의시설이 많지 않네요"
-                        imoji={require('../../static/images/imoji/imoji_cry.png')}
+                        imoji={require('../../../static/images/imoji/imoji_cry.png')}
                     />
                 )}
             </View>
@@ -30,7 +30,7 @@ const BottomBar = ({ currentCategories, ...props }) => {
                 <View style={styles.evaluationRate}>
                     <Image
                         style={styles.starIcon}
-                        source={require('../../static/images/icons/star.png')}
+                        source={require('../../../static/images/icons/star.png')}
                     />
                     <Text style={styles.evaluationRateText}>3.75</Text>
                 </View>
@@ -38,7 +38,7 @@ const BottomBar = ({ currentCategories, ...props }) => {
                     <Text style={styles.moreButtonText}>더보기</Text>
                     <Image
                         style={styles.arrowRightIcon}
-                        source={require('../../static/images/icons/arrowRight.png')}
+                        source={require('../../../static/images/icons/arrowRight.png')}
                     />
                 </TouchableOpacity>
             </View>
@@ -48,7 +48,7 @@ const BottomBar = ({ currentCategories, ...props }) => {
             >
                 <Image
                     style={styles.writingIcon}
-                    source={require('../../static/images/icons/main_bottom_writing.png')}
+                    source={require('../../../static/images/icons/main_bottom_writing.png')}
                 />
             </View>
         </View>

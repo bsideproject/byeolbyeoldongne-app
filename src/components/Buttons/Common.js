@@ -1,13 +1,14 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
-import theme from '../context/theme';
+import theme from '../../context/theme';
 
 const CommonButton = ({ text, ...props }) => {
     return (
         <TouchableOpacity
             style={styles.buttonWrapper}
             activeOpacity={1}
-            {...props}>
+            {...props}
+        >
             <Text style={styles.button}>{text}</Text>
         </TouchableOpacity>
     );

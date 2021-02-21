@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import theme from '../context/theme';
+import theme from '../../context/theme';
 
 const NoMessage = ({ text, imoji }) => {
     return (

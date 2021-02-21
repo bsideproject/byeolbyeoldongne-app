@@ -2,45 +2,31 @@ import React from 'react';
 import {
     Image,
     StyleSheet,
-    TextInput,
+    Text,
     View,
     TouchableNativeFeedback,
 } from 'react-native';
-import theme from '../context/theme';
+import theme from '../../../context/theme';
+import InputDeleteButton from '../../Buttons/InputDeleteButton';
 
-const SearchBox = ({
-    searchText,
-    handleClick,
-    handleChange,
-    handleSearch,
-    clear,
-}) => {
+const SearchBox = ({ searchText, handleSearchBarPress, clear }) => {
     return (
-        <TouchableNativeFeedback onPress={handleClick}>
+        <TouchableNativeFeedback onPress={handleSearchBarPress}>
             <View style={styles.search}>
-                <Image
-                    style={styles.gnbMenuIcon}
-                    source={require('../../static/images/icons/gnb_menu.png')}
-                />
+                <TouchableNativeFeedback>
+                    <Image
+                        style={styles.gnbMenuIcon}
+                        source={require('../../../static/images/icons/gnb_menu.png')}
+                    />
+                </TouchableNativeFeedback>
                 <Image
                     style={styles.addressIcon}
-                    source={require('../../static/images/icons/icon_address.png')}
+                    source={require('../../../static/images/icons/icon_address.png')}
                 />
-                <TextInput
-                    returnKeyType="search"
-                    style={styles.searchInput}
-                    onChangeText={handleChange}
-                    value={searchText}
-                    onSubmitEditing={handleSearch}
-                />
-                {!!searchText && (
-                    <TouchableNativeFeedback onPress={clear}>
-                        <Image
-                            style={styles.cancelIcon}
-                            source={require('../../static/images/icons/input_cancel.png')}
-                        />
-                    </TouchableNativeFeedback>
-                )}
+                <View style={styles.searchText}>
+                    <Text>{searchText}</Text>
+                </View>
+                {!!searchText && <InputDeleteButton clear={clear} />}
             </View>
         </TouchableNativeFeedback>
     );
@@ -61,7 +47,7 @@ const styles = StyleSheet.create({
         paddingRight: 23,
         height: 50,
     },
-    searchInput: {
+    searchText: {
         fontSize: theme.font.size.large,
         width: '100%',
     },

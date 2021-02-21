@@ -9,7 +9,9 @@ export const createRequestThunkTypes = (actionType) => {
     };
 };
 
-export const createRequestThunk = ({ actionType, request, params }) => (dispatch) => {
+export const createRequestThunk = ({ actionType, request, params }) => (
+    dispatch
+) => {
     const pendingAction = createAction(`${actionType}_PENDING`);
     const successAction = createAction(`${actionType}_SUCCESS`);
     const failureAction = createAction(`${actionType}_FAILURE`);
@@ -38,10 +40,11 @@ export const createRequestThunk = ({ actionType, request, params }) => (dispatch
         });
 };
 
-export const createInitialState = () => {
+export const createInitialState = (initialValue) => {
     return {
         pending: false,
         success: false,
+        data: initialValue || null,
         error: null,
     };
 };
@@ -50,6 +53,7 @@ export const createPendingState = () => {
     return {
         pending: true,
         success: false,
+        data: null,
         error: null,
     };
 };
@@ -67,6 +71,7 @@ export const createFailureState = (error) => {
     return {
         pending: false,
         success: false,
+        data: null,
         error,
     };
 };

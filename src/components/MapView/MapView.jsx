@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
-const GoogleMap = ({ geolocation, ...props }) => {
+const GoogleMap = ({ geolocation, currentLocation, ...props }) => {
+    const { x, y } = currentLocation;
     const { latitude, longitude } = geolocation;
 
     return (
@@ -10,10 +11,10 @@ const GoogleMap = ({ geolocation, ...props }) => {
             <MapView
                 {...props}
                 initialRegion={{
-                    latitude,
-                    longitude,
-                    latitudeDelta: 0.01,
-                    longitudeDelta: 0.01,
+                    latitude: x || latitude,
+                    longitude: y || longitude,
+                    latitudeDelta: 0.005,
+                    longitudeDelta: 0.005,
                 }}
                 style={styles.mapView}
                 provider={PROVIDER_GOOGLE}

@@ -6,7 +6,7 @@ import {
     TouchableNativeFeedback,
     Image,
 } from 'react-native';
-import theme from '../context/theme';
+import theme from '../../context/theme';
 
 const CategoryButton = ({ category, ...props }) => {
     const { name, label } = category;

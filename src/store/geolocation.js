@@ -18,8 +18,8 @@ export const setCurrentGeolocation = createAction(
 
 // initial region: 강남 사거리
 const initialState = {
-    latitude: 37.498126,
-    longitude: 127.059176,
+    latitude: 37.4979521720737,
+    longitude: 127.027638348418,
 };
 
 // reducer

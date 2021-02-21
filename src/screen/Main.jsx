@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import GoogleMap from '../components/MapView/MapView';
-import SearchBox from '../components/Main/SearchBox';
-import theme from '../components/context/theme';
-import BottomBar from '../components/Main/BottomBar';
+import SearchBox from '../components/ScreenComponent/Main/SearchBox';
+import theme from '../context/theme';
+import BottomBar from '../components/ScreenComponent/Main/BottomBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchLocationListAsync } from '../store/search';
+import { fetchLocationListAsync, setCurrentLocation } from '../store/search';
 import SafeAreaView from 'react-native-safe-area-view';
+import { initialCurrentLocation } from '../store/helper/initialstates';
 
 const Main = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -17,26 +18,34 @@ const Main = ({ navigation }) => {
         return { geolocation, categories, search };
     });
     const { currentCategories } = categories;
-    const { fetchLocationList } = search;
+    const { currentLocation } = search;
 
     const handleSearch = () => {
         dispatch(fetchLocationListAsync(searchText));
     };
 
-    const navigateSearchScreen = () => {
-        navigation.navigate('Search', { searchText });
+    const handleSearchBarPress = () => {
+        navigation.navigate('Search');
+    };
+
+    const clearInput = () => {
+        dispatch(setCurrentLocation(initialCurrentLocation));
+        navigation.navigate('Search');
     };
 
     return (
         <SafeAreaView style={styles.main}>
-            <GoogleMap geolocation={geolocation} />
+            <GoogleMap
+                currentLocation={currentLocation}
+                geolocation={geolocation}
+            />
             <View style={styles.searchBox}>
                 <SearchBox
-                    searchText={searchText}
-                    handleClick={navigateSearchScreen}
+                    searchText={currentLocation.addressName}
+                    handleSearchBarPress={handleSearchBarPress}
                     handleChange={(text) => setSearchText(text)}
                     handleSearch={handleSearch}
-                    clear={() => setSearchText('')}
+                    clear={clearInput}
                 />
                 <View style={styles.currentLocation}>
                     <Image
