@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Image, TouchableNativeFeedback } from 'react-native';
 
-const InputDeleteButton = ({ clear }) => {
+const InputDeleteButton = ({ clear, customStyles }) => {
     return (
         <TouchableNativeFeedback onPress={clear}>
             <Image
-                style={styles.cancelIcon}
+                style={{ ...styles.cancelIcon, ...customStyles }}
                 source={require('../../static/images/icons/input_cancel.png')}
             />
         </TouchableNativeFeedback>

@@ -8,12 +8,14 @@ import {
     TextInput,
 } from 'react-native';
 import theme from '../../context/theme';
+import InputDeleteButton from '../Buttons/InputDeleteButton';
 
 const SearchHeader = ({
     handlePressBack,
     handleChange,
     searchText,
     handleSubmit,
+    clear,
     ...props
 }) => {
     return (
@@ -37,8 +39,13 @@ const SearchHeader = ({
                     placeholder="도로명 주소 또는 건물 검색"
                     {...props}
                 />
+                {!!searchText && (
+                    <InputDeleteButton
+                        clear={clear}
+                        customStyles={styles.cancelIcon}
+                    />
+                )}
             </View>
-
             <TouchableOpacity disabled={!searchText} onPress={handleSubmit}>
                 <View style={styles.gnbSearch}>
                     <Text style={styles.gnbSearchText}>검색</Text>
@@ -60,6 +67,7 @@ const styles = StyleSheet.create({
     },
     searchBox: {
         flex: 1,
+        paddingRight: 50,
         marginRight: 50,
         marginLeft: 50,
     },
@@ -92,6 +100,9 @@ const styles = StyleSheet.create({
     },
     gnbSearchText: {
         color: theme.color.main,
+    },
+    cancelIcon: {
+        top: 0,
     },
 });
 

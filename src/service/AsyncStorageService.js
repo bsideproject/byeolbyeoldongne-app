@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class AsyncStorageService {
     _prefix = '@ByulByulDongne';
@@ -7,17 +7,20 @@ class AsyncStorageService {
         try {
             await AsyncStorage.setItem(
                 `${this._prefix}:${key}`,
-                value.toString()
+                JSON.stringify(value)
             );
         } catch (e) {
+            console.log(e);
             /**
              * TODO: Error handling
              */
         }
     };
-    getItem = async () => {
+
+    getItem = async (key) => {
         try {
-            return await AsyncStorage.getItem('TASKS');
+            const data = await AsyncStorage.getItem(`${this._prefix}:${key}`);
+            return JSON.parse(data);
         } catch (error) {
             /**
              * TODO: Error handling

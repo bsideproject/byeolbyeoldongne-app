@@ -10,7 +10,7 @@ import {
 import { fetchLocationList } from '../api/search';
 import renameKeys from '../util/renameKeys';
 import snakeToCamel from '../util/snakeToCamel';
-import { initialCurrentLocation } from './helper/initialstates';
+import { initialCurrentLocation } from './helper/initialStates';
 
 // action types
 const prefix = '@search';
@@ -20,6 +20,7 @@ const FETCH_LOCATION_LIST = createRequestThunkTypes(
 );
 const INITIALIZE_FETCH_LOCATION_LIST = `${prefix}/INITIALIZE_FETCH_LOCATION_LIST`;
 const SET_CURRENT_LOCATION = `${prefix}/SET_CURRENT_LOCATION`;
+const INITIALIZE_CURRENT_LOCATION = `${prefix}/INITIALIZE_CURRENT_LOCATION`;
 const SET_CURRENT_SEARCH_TEXT = `${prefix}/SET_CURRENT_SEARCH_TEXT`;
 
 // actions
@@ -33,6 +34,7 @@ export const fetchLocationListAsync = (query) => {
 export const initializeFetchLocationList = createAction(
     INITIALIZE_FETCH_LOCATION_LIST
 );
+
 export const setCurrentLocation = createAction(
     SET_CURRENT_LOCATION,
     (payload) => {
@@ -41,13 +43,15 @@ export const setCurrentLocation = createAction(
         };
     }
 );
-export const setCurrentSearchText = createAction(
-    SET_CURRENT_LOCATION,
-    (text) => {
-        return text;
-    }
+
+export const initializeCurrentLocation = createAction(
+    INITIALIZE_CURRENT_LOCATION
 );
 
+export const setCurrentSearchText = createAction(
+    SET_CURRENT_SEARCH_TEXT,
+    (payload) => payload
+);
 // initial state
 const initialState = {
     fetchLocationList: createInitialState([]),
@@ -90,6 +94,10 @@ export default handleActions(
                 x: action.payload.x,
                 y: action.payload.y,
             },
+        }),
+        [INITIALIZE_CURRENT_LOCATION]: (state) => ({
+            ...state,
+            currentLocation: initialCurrentLocation,
         }),
 
         [SET_CURRENT_SEARCH_TEXT]: (state, action) => ({

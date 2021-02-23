@@ -1,28 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import GoogleMap from '../components/MapView/MapView';
 import SearchBox from '../components/ScreenComponent/Main/SearchBox';
 import theme from '../context/theme';
 import BottomBar from '../components/ScreenComponent/Main/BottomBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchLocationListAsync, setCurrentLocation } from '../store/search';
+import { setCurrentLocation } from '../store/search';
 import SafeAreaView from 'react-native-safe-area-view';
-import { initialCurrentLocation } from '../store/helper/initialstates';
+import { initialCurrentLocation } from '../store/helper/initialStates';
 
 const Main = ({ navigation }) => {
     const dispatch = useDispatch();
-    const [searchText, setSearchText] = useState('');
 
     const { geolocation, categories, search } = useSelector((state) => {
         const { geolocation, categories, search } = state;
         return { geolocation, categories, search };
     });
     const { currentCategories } = categories;
-    const { currentLocation } = search;
-
-    const handleSearch = () => {
-        dispatch(fetchLocationListAsync(searchText));
-    };
+    const { currentLocation, currentSearchText } = search;
 
     const handleSearchBarPress = () => {
         navigation.navigate('Search');
@@ -41,10 +36,8 @@ const Main = ({ navigation }) => {
             />
             <View style={styles.searchBox}>
                 <SearchBox
-                    searchText={currentLocation.addressName}
+                    searchText={currentSearchText}
                     handleSearchBarPress={handleSearchBarPress}
-                    handleChange={(text) => setSearchText(text)}
-                    handleSearch={handleSearch}
                     clear={clearInput}
                 />
                 <View style={styles.currentLocation}>

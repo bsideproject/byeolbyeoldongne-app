@@ -13,13 +13,16 @@ const SearchResult = ({
     return (
         <View style={styles.result}>
             {results.map((result) => {
+                const text = result.placeName
+                    ? `${result.addressName} ${result.placeName}`
+                    : result.addressName;
                 return (
                     <SearchListItem
                         key={result.placeId}
                         type={SEARCH_LIST_ITEM_TYPE.RESULT}
-                        text={result.addressName}
+                        text={text}
                         highlightText={searchText}
-                        handlePress={() => handleItemPress(result)}
+                        handlePress={() => handleItemPress(result, text)}
                         clear={clear}
                     />
                 );

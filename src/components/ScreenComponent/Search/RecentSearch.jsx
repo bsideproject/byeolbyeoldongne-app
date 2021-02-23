@@ -1,8 +1,34 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import SearchListItem from '../../ListItem/Search';
+import { SEARCH_LIST_ITEM_TYPE } from '../../../constants/search';
 
-const RecentSearch = ({ searchText, ...props }) => {
-    return <View style={styles.recentSearch} />;
+const RecentSearch = ({
+    searchText,
+    results,
+    handleItemPress,
+    clear,
+    ...props
+}) => {
+    return (
+        <View style={styles.result}>
+            {results.map((result) => {
+                const text = result.placeName
+                    ? `${result.addressName} ${result.placeName}`
+                    : result.addressName;
+                return (
+                    <SearchListItem
+                        key={result.placeId}
+                        type={SEARCH_LIST_ITEM_TYPE.RECENT}
+                        text={text}
+                        highlightText={searchText}
+                        handlePress={() => handleItemPress(result, text)}
+                        clear={() => clear(result)}
+                    />
+                );
+            })}
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({

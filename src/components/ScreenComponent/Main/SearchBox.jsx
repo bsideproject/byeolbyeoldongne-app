@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
         height: 50,
     },
     searchText: {
+        flex: 1,
         fontSize: theme.font.size.large,
-        width: '100%',
     },
     gnbMenuIcon: {
         width: 19,

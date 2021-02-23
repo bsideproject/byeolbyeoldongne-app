@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import theme from '../context/theme';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     fetchLocationListAsync,
     initializeFetchLocationList,
     setCurrentLocation,
+    setCurrentSearchText,
 } from '../store/search';
 import SafeAreaView from 'react-native-safe-area-view';
 import RecentSearch from '../components/ScreenComponent/Search/RecentSearch';
 import SearchHeader from '../components/Header/SearchHeader';
 import SearchResult from '../components/ScreenComponent/Search/SearchResult';
+import AsyncStorageService from '../service/AsyncStorageService';
+
+const RECENT_SEARCH_STORAGE_KEY = '__recent_search_keywords__';
 
 const Search = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -21,9 +25,16 @@ const Search = ({ navigation }) => {
     const locationList = fetchLocationList.data || [];
 
     const [searchText, setSearchText] = useState(currentSearchText);
+    const [recentSearchKeywords, setRecentSearchKeywords] = useState([]);
+
+    const getRecentSearchKeywords = async () => {
+        const recentSearchKeywords = await AsyncStorageService.getItem(
+            RECENT_SEARCH_STORAGE_KEY
+        );
+        setRecentSearchKeywords(recentSearchKeywords || []);
+    };
 
     const handlePressBack = () => {
-        dispatch(initializeFetchLocationList());
         navigation.goBack();
     };
 
@@ -35,13 +46,51 @@ const Search = ({ navigation }) => {
         dispatch(fetchLocationListAsync(searchText));
     };
 
-    const handleItemPress = (item) => {
+    const handleItemPress = (item, searchText) => {
+        const hasItem = recentSearchKeywords.find(
+            (v) => console.log(v, item) || v.placeId === item.placeId
+        );
+
+        if (!hasItem) {
+            const newRecentKeywords = [...recentSearchKeywords, item];
+
+            AsyncStorageService.setItem(
+                RECENT_SEARCH_STORAGE_KEY,
+                newRecentKeywords
+            );
+        }
+
+        dispatch(setCurrentSearchText(searchText));
         dispatch(setCurrentLocation(item));
+        navigation.goBack();
     };
 
-    const handleClear = () => {
+    const handleSearchTextClear = () => {
         setSearchText('');
+        dispatch(initializeFetchLocationList());
     };
+
+    const handleRecentSearchTextClear = async (item) => {
+        const removedRecentSearch = recentSearchKeywords.filter(
+            (v) => v.placeId !== item.placeId
+        );
+        await AsyncStorageService.setItem(
+            RECENT_SEARCH_STORAGE_KEY,
+            removedRecentSearch
+        );
+
+        await getRecentSearchKeywords();
+    };
+
+    useEffect(() => {
+        getRecentSearchKeywords();
+
+        if (searchText) {
+            dispatch(fetchLocationListAsync(searchText));
+        } else {
+            dispatch(initializeFetchLocationList());
+        }
+    }, []);
 
     return (
         <SafeAreaView style={styles.main}>
@@ -51,14 +100,21 @@ const Search = ({ navigation }) => {
                 handleChange={handleChangeText}
                 searchText={searchText}
                 handleSubmit={handleSubmit}
+                clear={handleSearchTextClear}
             />
-            {/*<RecentSearch />*/}
-            <SearchResult
-                searchText={searchText}
-                results={locationList}
-                handleItemPress={handleItemPress}
-                clear={handleClear}
-            />
+            <ScrollView>
+                <RecentSearch
+                    searchText={searchText}
+                    results={recentSearchKeywords}
+                    handleItemPress={handleItemPress}
+                    clear={handleRecentSearchTextClear}
+                />
+                <SearchResult
+                    searchText={searchText}
+                    results={locationList}
+                    handleItemPress={handleItemPress}
+                />
+            </ScrollView>
         </SafeAreaView>
     );
 };
