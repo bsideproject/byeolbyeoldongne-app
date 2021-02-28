@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, TouchableNativeFeedback } from 'react-native';
 import GoogleMap from '../components/MapView/MapView';
 import SearchBox from '../components/ScreenComponent/Main/SearchBox';
 import theme from '../context/theme';
 import BottomBar from '../components/ScreenComponent/Main/BottomBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentLocation } from '../store/search';
+import { initializeCurrentLocation, setCurrentLocation } from '../store/search';
 import SafeAreaView from 'react-native-safe-area-view';
 import { initialCurrentLocation } from '../store/helper/initialStates';
+import Geolocation from '@react-native-community/geolocation';
+import { setCurrentGeolocation } from '../store/geolocation';
+import mapLocationToCoords from '../util/mapLocationToCoords';
+
+const regionTypes = {
+    GEOLOCATION: 'GEOLOCATION',
+    ADDRESS: 'ADDRESS',
+};
 
 const Main = ({ navigation }) => {
     const dispatch = useDispatch();
 
+    const [regionType, setRegionType] = useState(regionTypes.GEOLOCATION);
     const { geolocation, categories, search } = useSelector((state) => {
         const { geolocation, categories, search } = state;
         return { geolocation, categories, search };
@@ -28,11 +37,37 @@ const Main = ({ navigation }) => {
         navigation.navigate('Search');
     };
 
+    const onCurrentLocationButtonPress = () => {
+        if (regionType === regionTypes.GEOLOCATION) {
+            setRegionType(regionTypes.ADDRESS);
+            return;
+        }
+
+        Geolocation.getCurrentPosition(({ coords }) => {
+            const { latitude, longitude } = coords;
+
+            setRegionType(regionTypes.GEOLOCATION);
+            dispatch(setCurrentGeolocation(latitude, longitude));
+        });
+    };
+
+    const handleMapDragEnd = () => {
+        setRegionType(regionTypes.ADDRESS);
+    };
+
+    useEffect(() => {
+        if (currentLocation.placeId) {
+            setRegionType(regionTypes.ADDRESS);
+        }
+    }, [currentLocation.placeId]);
+
     return (
         <SafeAreaView style={styles.main}>
             <GoogleMap
-                currentLocation={currentLocation}
+                regionType={regionType}
+                currentLocation={mapLocationToCoords(currentLocation)}
                 geolocation={geolocation}
+                handleMapDragEnd={handleMapDragEnd}
             />
             <View style={styles.searchBox}>
                 <SearchBox
@@ -40,12 +75,21 @@ const Main = ({ navigation }) => {
                     handleSearchBarPress={handleSearchBarPress}
                     clear={clearInput}
                 />
-                <View style={styles.currentLocation}>
-                    <Image
-                        style={styles.currentLocationIcon}
-                        source={require('../static/images/icons/current_location.png')}
-                    />
-                </View>
+                <TouchableNativeFeedback onPress={onCurrentLocationButtonPress}>
+                    <View style={styles.currentLocation}>
+                        {regionType === regionTypes.GEOLOCATION ? (
+                            <Image
+                                style={styles.currentLocationIcon}
+                                source={require('../static/images/icons/current_location_active.png')}
+                            />
+                        ) : (
+                            <Image
+                                style={styles.currentLocationIcon}
+                                source={require('../static/images/icons/current_location.png')}
+                            />
+                        )}
+                    </View>
+                </TouchableNativeFeedback>
             </View>
             <BottomBar currentCategories={currentCategories} />
         </SafeAreaView>
