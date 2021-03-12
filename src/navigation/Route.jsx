@@ -16,6 +16,7 @@ const Route = () => {
     useEffect(() => {
         Geolocation.getCurrentPosition(({ coords }) => {
             const { latitude, longitude } = coords;
+
             dispatch(setCurrentGeolocation(latitude, longitude));
         });
     }, []);
