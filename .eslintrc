@@ -9,9 +9,10 @@
         "@react-native-community",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended", // React hooks rules
-        "plugin:prettier/recommended" // Prettier recommended rules
+        "plugin:prettier/recommended", // Prettier recommended rules
+        "plugin:import/warnings"
     ],
-    "plugins": ["react", "prettier"],
+    "plugins": ["react", "prettier", "import"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
