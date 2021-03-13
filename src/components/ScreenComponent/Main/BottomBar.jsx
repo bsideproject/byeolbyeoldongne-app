@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../../../context/theme';
 import CategoryButton from '../../Buttons/CategoryButton';
 import NoMessage from '../../Messages/NoMessage';
+import CategoryModal from './CategoryModal';
 
 const BottomBar = ({ currentCategories, ...props }) => {
+    const [selectedCategory, setSelectedCategory] = useState(null);
+
     return (
         <View style={styles.bottomBar}>
             <View style={styles.categories}>
@@ -14,6 +17,7 @@ const BottomBar = ({ currentCategories, ...props }) => {
                             <CategoryButton
                                 key={category.name}
                                 category={category}
+                                onPress={() => setSelectedCategory(category)}
                             />
                         );
                     })
@@ -51,6 +55,11 @@ const BottomBar = ({ currentCategories, ...props }) => {
                     source={require('../../../static/images/icons/main_bottom_writing.png')}
                 />
             </View>
+            <CategoryModal
+                modalVisible={!!selectedCategory}
+                category={selectedCategory}
+                handleClose={() => setSelectedCategory(null)}
+            />
         </View>
     );
 };

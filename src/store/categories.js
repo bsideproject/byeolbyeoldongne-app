@@ -18,13 +18,13 @@ export const setCurrentGeolocation = createAction(
  */
 const initialState = {
     currentCategories: [
-        // { name: 'cafe.png', label: '카세권' },
-        // { name: 'drugstore.png', label: '편세권' },
-        // { name: 'pt.png', label: '운세권' },
-        // { name: 'berger.png', label: '햄세권' },
-        // { name: 'hospital.png', label: '의세권' },
-        // { name: 'forest.png', label: '숲세권' },
-        // { name: 'mall.png', label: '몰세권' },
+        { name: 'cafe.png', label: '카세권' },
+        { name: 'drugstore.png', label: '편세권' },
+        { name: 'pt.png', label: '운세권' },
+        { name: 'berger.png', label: '햄세권' },
+        { name: 'hospital.png', label: '의세권' },
+        { name: 'forest.png', label: '숲세권' },
+        { name: 'mall.png', label: '몰세권' },
     ],
 };
 
