@@ -3,6 +3,7 @@ import { StatusBar, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Route from './src/navigation/Route';
 
+
 const App = () => {
     return (
         <SafeAreaProvider>

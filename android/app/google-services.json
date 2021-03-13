@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "755160641851",
+    "project_id": "byeolbyeoldongne",
+    "storage_bucket": "byeolbyeoldongne.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755160641851:android:00d82e430c7248256a471e",
+        "android_client_info": {
+          "package_name": "com.byeolbyeoldongne_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755160641851-614huotg9oo7i4n20agbo3bsvkq6cf7j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.byeolbyeoldongne_app",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "755160641851-dgbqqv1iq4q8314lfcrfaaleadumfi0v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-GsG9cG0GJk_4Kmc49zjMx-Z3AJM5V8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "755160641851-dgbqqv1iq4q8314lfcrfaaleadumfi0v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

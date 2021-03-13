@@ -16,6 +16,7 @@
       <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="GOOGLE_API_KEY"/>   <!--Google API KEY 세팅--> 
+
       <uses-library android:name="org.apache.http.legacy" android:required="false"/>
       
       <activity
