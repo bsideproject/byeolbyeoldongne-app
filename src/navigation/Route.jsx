@@ -3,9 +3,14 @@ import { useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Geolocation from '@react-native-community/geolocation';
-import Main from '../screen/Main';
-import Settings from '../screen/Settings';
-import Search from '../screen/Search';
+import MainScreen from '../screens/Main';
+import SettingScreen from '../screens/Settings';
+import HomeScreen from '../screens/Home';
+import SignInScreen from '../screens/SignIn';
+import SignUpScreen from '../screens/SignUp';
+import OnBoardScreen from '../screens/OnBorad';
+import WelcomeScreen from '../screens/Welcome';
+import SearchScreen from '../screens/Search';
 import { setCurrentGeolocation } from '../store/geolocation';
 
 const Stack = createStackNavigator();
@@ -24,9 +29,44 @@ const Route = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Main" headerMode="none">
-                <Stack.Screen name="Main" component={Main} />
-                <Stack.Screen name="Search" component={Search} />
-                <Stack.Screen name="Settings" component={Settings} />
+                <Stack.Screen
+                    name="Signin"
+                    component={SignInScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen name="Signup" component={SignUpScreen} />
+                <Stack.Screen
+                    name="Home"
+                    component={HomeScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="Main"
+                    component={MainScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen name="Search" component={SearchScreen} />
+                <Stack.Screen name="Settings" component={SettingScreen} />
+                <Stack.Screen
+                    name="Onboard"
+                    component={OnBoardScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="Welcome"
+                    component={WelcomeScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );

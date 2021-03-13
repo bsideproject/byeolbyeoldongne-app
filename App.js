@@ -5,6 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Route from './src/navigation/Route';
 import store from './src/store';
 
+
 const App = () => {
     return (
         <Provider store={store}>
