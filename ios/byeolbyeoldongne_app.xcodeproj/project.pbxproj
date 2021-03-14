@@ -17,6 +17,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* byeolbyeoldongne_appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* byeolbyeoldongne_appTests.m */; };
 		2F99D3E57684EBEE09C1770B /* libPods-byeolbyeoldongne_app-byeolbyeoldongne_appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8BC7E0B43972667A2A65B57 /* libPods-byeolbyeoldongne_app-byeolbyeoldongne_appTests.a */; };
 		3D53477DD2CE6DF3C348C57A /* libPods-byeolbyeoldongne_app-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F09AB93F3D23980A8ABA49ED /* libPods-byeolbyeoldongne_app-tvOSTests.a */; };
+		7F4F260225FDFC9E00AF4AAA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F4F260125FDFC9E00AF4AAA /* GoogleService-Info.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		84E039D94D6646EED5A79EFB /* libPods-byeolbyeoldongne_app-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 70DF809D402E68CE2F03013F /* libPods-byeolbyeoldongne_app-tvOS.a */; };
 		D9D1D0B5760FA3EB01FC546A /* libPods-byeolbyeoldongne_app.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 706265A94415F1A40CF23800 /* libPods-byeolbyeoldongne_app.a */; };
@@ -57,6 +58,7 @@
 		706265A94415F1A40CF23800 /* libPods-byeolbyeoldongne_app.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-byeolbyeoldongne_app.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70DF809D402E68CE2F03013F /* libPods-byeolbyeoldongne_app-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-byeolbyeoldongne_app-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		75E936D9DAD7C05BCC364D10 /* Pods-byeolbyeoldongne_app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-byeolbyeoldongne_app.release.xcconfig"; path = "Target Support Files/Pods-byeolbyeoldongne_app/Pods-byeolbyeoldongne_app.release.xcconfig"; sourceTree = "<group>"; };
+		7F4F260125FDFC9E00AF4AAA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = byeolbyeoldongne_app/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A989147B1BA970278A92929D /* Pods-byeolbyeoldongne_app-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-byeolbyeoldongne_app-tvOS.release.xcconfig"; path = "Target Support Files/Pods-byeolbyeoldongne_app-tvOS/Pods-byeolbyeoldongne_app-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		C417AD46E2F82D55181EBAEA /* Pods-byeolbyeoldongne_app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-byeolbyeoldongne_app.debug.xcconfig"; path = "Target Support Files/Pods-byeolbyeoldongne_app/Pods-byeolbyeoldongne_app.debug.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 		13B07FAE1A68108700A75B9A /* byeolbyeoldongne_app */ = {
 			isa = PBXGroup;
 			children = (
+				7F4F260125FDFC9E00AF4AAA /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -341,6 +344,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				7F4F260225FDFC9E00AF4AAA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,11 +424,13 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-byeolbyeoldongne_app-byeolbyeoldongne_appTests/Pods-byeolbyeoldongne_app-byeolbyeoldongne_appTests-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -484,11 +490,13 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-byeolbyeoldongne_app/Pods-byeolbyeoldongne_app-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
