@@ -1,6 +1,7 @@
 import React, { useState , useEffect } from 'react';
 import { View , StyleSheet , TouchableOpacity ,Text, Image } from 'react-native';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from  '@react-native-community/google-signin';
+import RectangleButton from '../components/Buttons/RectangleButton';
 
 const WelcomeScreen = ({navigation}) => {
     const [warnMessage , setWarnMessage] = useState("");
@@ -48,6 +49,9 @@ const WelcomeScreen = ({navigation}) => {
                     onPress={goToMain}
                 >                
                     <Text style={{color :"grey" }}>건너뛰기</Text> 
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={1} onPress={googleSignOut} style={{marginRight : 280}}>                                                
+                    <Text style={{color :"grey" }}>로그아웃</Text>                                          
                 </TouchableOpacity> 
             </View>
             <View style={styles.welcomeContainer}>
@@ -62,7 +66,7 @@ const WelcomeScreen = ({navigation}) => {
           
             <Image
                 resizeMode='cover'
-                source={require("../../assets/welcomeOnboard.png")} 
+                source={require("../static/images/bgimages/welcome_onboard.png")} 
                 style={styles.imageWelcome}   
             />
 
@@ -71,21 +75,12 @@ const WelcomeScreen = ({navigation}) => {
                     (null)
                     :(<Image 
                     resizeMode="contain"
-                    source={require("../../assets/warn.png")}/>)
+                    source={require("../static/images/icons/warn.png")}/>)
                 }                                
                 <Text style={styles.warn}>{warnMessage}</Text> 
             </View>
-            <View>
-                <TouchableOpacity style={styles.RoundStyle} activeOpacity={0.8} onPress={goToMain}>
-                    <View style={styles.btnContainer}>                               
-                        <Text style={styles.btnText}>후기작성</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.RoundStyle} activeOpacity={0.8} onPress={googleSignOut}>
-                    <View style={styles.btnContainer}>                               
-                        <Text style={styles.btnText}>로그아웃</Text>
-                    </View>
-                </TouchableOpacity>
+            <View style={styles.btnViewContainer}>                
+                <RectangleButton text={"동네후기 작성하기"} onPress={goToMain}/>                
             </View>                                                                                                             
         </View>
     ); 
@@ -135,10 +130,11 @@ const styles = StyleSheet.create({
         color : 'rgba(234, 75, 99, 1)' , 
         fontSize : 12 ,  
         fontWeight : "500" ,    
-        marginLeft :5,              
+        marginTop : 10,
+        textAlign : 'center'           
     },
     WarnContainer :{   
-        width : '66%',     
+        width : '50%',     
         alignItems : 'center',    
         marginTop : 30 ,
         flexDirection : "column" ,
@@ -164,6 +160,20 @@ const styles = StyleSheet.create({
         textAlign : 'center' ,
         marginHorizontal : 20 
       },
+      btnViewContainer : {
+          marginTop : 20,
+          width : "100%" ,
+          height : "8%",
+          alignItems :'center'
+      }
   });
 
 export default WelcomeScreen;
+
+/*
+<TouchableOpacity style={styles.RoundStyle} activeOpacity={0.8} onPress={goToMain}>
+                    <View style={styles.btnContainer}>                               
+                        <Text style={styles.btnText}>후기작성</Text>
+                    </View>
+                </TouchableOpacity>
+                */

@@ -111,7 +111,7 @@ const SignUpScreen = ({ navigation , route}) => {
                     (null)
                     :(<Image 
                     resizeMode="contain"
-                    source={require("../../assets/warn.png")}/>)
+                    source={require("../static/images/icons/warn.png")}/>)
                 }                                
                 <Text style={styles.warn}>{warnMessage}</Text> 
             </View>     

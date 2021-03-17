@@ -10,8 +10,8 @@ import Splash from '../components/Splash';
 / 등의 작업을 진행한다. 
 */
 
-const GOOGLE_LOGO = "../../assets/googleLogo.png" ;
-const APPLE_LOGO = "../../assets/appleLogo.png" ;
+const GOOGLE_LOGO = '../static/images/icons/google_logo.png' ;
+const APPLE_LOGO = '../static/images/icons/apple_logo.png';
 
 
 
@@ -142,14 +142,14 @@ const SignInScreen = ({navigation}) => {
                     }
                   }
                   resizeMode = "cover"
-                  source={require("../../assets/bkimg_login.png")}                        
+                  source={require("../static/images/bgimages/bkimg_login.png")}                        
                   > 
                   <View style={styles.overLay}/> 
                   </ImageBackground>
                   <View style={styles.LogoContainer}>
                     <Image
                         resizeMode='cover'
-                        source={require("../../assets/logo_bbdongne.png")}    
+                        source={require("../static/images/symbol/logo_bbdongne.png")}    
                     />
                     <Text style={styles.LogoText} >살아보니 어때?</Text>       
                   </View>

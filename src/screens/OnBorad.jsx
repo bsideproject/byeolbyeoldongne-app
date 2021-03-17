@@ -37,7 +37,8 @@ const OnBoardScreen = ({navigation})=>{
             {
                 //첫번째 온보딩페이지
                 backgroundColor : "white" , 
-                image : <Image source={require('../../assets/onboard1.png')} resizeMode="cover"/>,
+                image : <Image source={require('../static/images/bgimages/onboard1.png')} resizeMode="cover"
+                            style={{ marginTop : -72, marginLeft : -40}}/>,
                 title : (
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>동네별 평가를 한눈에~!</Text>
@@ -52,8 +53,8 @@ const OnBoardScreen = ({navigation})=>{
             {
                 //두번째 온보딩페이지
                 backgroundColor : "white" , 
-                image : <Image source={require('../../assets/onboard2.png') } resizeMode="cover"
-                          style={{ marginTop : 72}}  />,
+                image : <Image source={require('../static/images/bgimages/onboard2.png') } resizeMode="cover"
+                          style={{ marginTop : 0}}  />,
                 title : (
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>우리동네는 What 세권?</Text>
@@ -69,8 +70,8 @@ const OnBoardScreen = ({navigation})=>{
             {
                 //세번째 온보딩페이지
                 backgroundColor : "white" , 
-                image : <Image source={require('../../assets/onboard3.png')} resizeMode="cover"
-                          style={{ marginTop : -10}}/>,
+                image : <Image source={require('../static/images/bgimages/onboard3.png')} resizeMode="cover"
+                          style={{ marginTop : -70 , marginLeft : 20}}/>,
                 title : (
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>살아봐야 아는 정보들</Text>
