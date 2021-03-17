@@ -16,7 +16,7 @@ const Splash = ({navigation}) => {
                     }
                 }
                 resizeMode = "cover"
-                source={require("../static/images/bgimages/bkimg_login.png")}                        
+                source={require('../../../static/images/bgimages/bkimg_login.png')}                        
                 > 
                 <View style={styles.overLay}/>
                 <View style={ {flex : 0.35}}>
@@ -24,7 +24,7 @@ const Splash = ({navigation}) => {
                 <View style={styles.splashContainer}>
                     <Image
                         resizeMode='cover'
-                        source={require("../static/images/symbol/logo_bbdongne.png")}    
+                        source={require('../../../static/images/symbol/logo_bbdongne.png')}    
                     />
                     <Text style={styles.splashText} >저 동네,궁금하지 않아?</Text>       
                 </View>                                                                          

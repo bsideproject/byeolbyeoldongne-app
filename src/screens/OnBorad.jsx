@@ -1,11 +1,14 @@
 import React from 'react';
 import { View , Text ,Button, Image , StyleSheet, TouchableOpacity} from 'react-native';
 import Onboarding from "react-native-onboarding-swiper" ; 
+import { APP_USE_STATE } from '../constants/search';
+import inAppStorage from "../service/AsyncStorageService";
 
 const OnBoardScreen = ({navigation})=>{
     
     
-    const OnBoardingDone = ()=>{        
+    const OnBoardingDone = async ()=>{ 
+        await inAppStorage.setItem(APP_USE_STATE.AT_LEAST_ONCE, true);       
         navigation.goBack();
     }   
 

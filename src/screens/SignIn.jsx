@@ -1,8 +1,10 @@
 import React , { useEffect , useState , useLayoutEffect  } from 'react';
 import { View, Text, Button, StyleSheet , Image, ImageBackground ,TouchableOpacity} from 'react-native';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from  '@react-native-community/google-signin';
-import {UserAPI } from "../module/ServerAPI"
-import Splash from '../components/Splash';
+import {UserAPI } from "../module/ServerAPI" ;
+import Splash from '../components/ScreenComponent/Common/Splash';
+import inAppStorage from '../service/AsyncStorageService' ;
+import { APP_USE_STATE } from '../constants/search';
 /*
 / 처음 로딩화면 
 / 1.유저의 로그인 상태확인
@@ -31,15 +33,20 @@ const SignInScreen = ({navigation}) => {
     }
 
     useEffect(()=>{
-        setTimeout(()=>{
+        setTimeout(  ()=>{
             console.log("...Initializing...");
             setConfig();
-            setInit(false);
-            //TO-DO: 온보딩들어가는 조건을 구하는 펑션을 작성해서 state를 isFirstRun에 반환해야한다.
-            setIsFirstRun(true);
+            setInit(false);     
+            checkFirstRun();       
         },6000)        
     },[])
 
+
+    const checkFirstRun = async ()=>{
+      const isOnceRun = await inAppStorage.getItem(APP_USE_STATE.AT_LEAST_ONCE) || false ;
+      console.log(isOnceRun);      
+      setIsFirstRun(!isOnceRun);
+    }
 
     useEffect(()=>{
       if(isFirstRun === true) {           
@@ -71,10 +78,9 @@ const SignInScreen = ({navigation}) => {
                 break;
               
               case "02" : 
-                //기존 회원
-                //닉네임을 포함하여 전달..
-                //우선 Welcome 화면으로 가도록 테스트
-                navigation.navigate('Welcome');
+                //기존 회원이므로 메인화면으로
+                //닉네임을 포함하여 전달..               
+                navigation.navigate('Main');
                 break;
               
               case "99" :
