@@ -14,6 +14,7 @@ export default {
         white: '#FFFFFF',
         button: '#2326A8',
         search: '#651CD9',
+        light: '#909090',
         size: {
             normal: 12,
             middle: 14,

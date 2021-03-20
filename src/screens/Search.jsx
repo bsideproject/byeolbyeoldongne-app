@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import theme from '../context/theme';
-import { useDispatch, useSelector } from 'react-redux';
+import { batch, useDispatch, useSelector } from 'react-redux';
 import {
     fetchLocationListAsync,
     initializeFetchLocationList,
@@ -13,8 +13,13 @@ import RecentSearch from '../components/ScreenComponent/Search/RecentSearch';
 import SearchHeader from '../components/Header/SearchHeader';
 import SearchResult from '../components/ScreenComponent/Search/SearchResult';
 import AsyncStorageService from '../service/AsyncStorageService';
+import { setCurrentCoords } from '../store/geolocation';
 
 const RECENT_SEARCH_STORAGE_KEY = '__recent_search_keywords__';
+
+/**
+ * 테스트 검색어 : 남부순환로144길 24
+ */
 
 const Search = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -60,8 +65,12 @@ const Search = ({ navigation }) => {
             );
         }
 
-        dispatch(setCurrentSearchText(searchText));
-        dispatch(setCurrentLocation(item));
+        batch(() => {
+            dispatch(setCurrentSearchText(searchText));
+            dispatch(setCurrentLocation(item));
+            dispatch(setCurrentCoords(item.y, item.x));
+        });
+
         navigation.goBack();
     };
 
