@@ -1,8 +1,11 @@
 import React , { useEffect , useState , useLayoutEffect  } from 'react';
 import { View, Text, Button, StyleSheet , Image, ImageBackground ,TouchableOpacity} from 'react-native';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from  '@react-native-community/google-signin';
-import {UserAPI } from "../module/ServerAPI"
-import Splash from '../components/Splash';
+import {UserAPI } from "../module/ServerAPI" ;
+import Splash from '../components/ScreenComponent/Common/Splash';
+import inAppStorage from '../service/AsyncStorageService' ;
+import { APP_USE_STATE } from '../constants/search';
+
 /*
 / 처음 로딩화면 
 / 1.유저의 로그인 상태확인
@@ -10,8 +13,8 @@ import Splash from '../components/Splash';
 / 등의 작업을 진행한다. 
 */
 
-const GOOGLE_LOGO = "../../assets/googleLogo.png" ;
-const APPLE_LOGO = "../../assets/appleLogo.png" ;
+const GOOGLE_LOGO = '../static/images/icons/google_logo.png' ;
+const APPLE_LOGO = '../static/images/icons/apple_logo.png';
 
 
 
@@ -31,15 +34,20 @@ const SignInScreen = ({navigation}) => {
     }
 
     useEffect(()=>{
-        setTimeout(()=>{
+        setTimeout(  ()=>{
             console.log("...Initializing...");
             setConfig();
-            setInit(false);
-            //TO-DO: 온보딩들어가는 조건을 구하는 펑션을 작성해서 state를 isFirstRun에 반환해야한다.
-            setIsFirstRun(true);
+            setInit(false);     
+            checkFirstRun();       
         },6000)        
     },[])
 
+
+    const checkFirstRun = async ()=>{
+      const isOnceRun = await inAppStorage.getItem(APP_USE_STATE.AT_LEAST_ONCE) || false ;
+      console.log(isOnceRun);      
+      setIsFirstRun(!isOnceRun);
+    }
 
     useEffect(()=>{
       if(isFirstRun === true) {           
@@ -71,10 +79,9 @@ const SignInScreen = ({navigation}) => {
                 break;
               
               case "02" : 
-                //기존 회원
-                //닉네임을 포함하여 전달..
-                //우선 Welcome 화면으로 가도록 테스트
-                navigation.navigate('Welcome');
+                //기존 회원이므로 메인화면으로
+                //닉네임을 포함하여 전달..               
+                navigation.navigate('Main');
                 break;
               
               case "99" :
@@ -121,6 +128,11 @@ const SignInScreen = ({navigation}) => {
     const appleSignIn = ()=>{
 
     };
+
+    const setInitlizeApp = ()=>{
+      inAppStorage.clearStore();
+      googleSignOut();
+    }
    
     return (
       <>
@@ -142,14 +154,14 @@ const SignInScreen = ({navigation}) => {
                     }
                   }
                   resizeMode = "cover"
-                  source={require("../../assets/bkimg_login.png")}                        
+                  source={require("../static/images/bgimages/bkimg_login.png")}                        
                   > 
                   <View style={styles.overLay}/> 
                   </ImageBackground>
                   <View style={styles.LogoContainer}>
                     <Image
                         resizeMode='cover'
-                        source={require("../../assets/logo_bbdongne.png")}    
+                        source={require("../static/images/symbol/logo_bbdongne.png")}    
                     />
                     <Text style={styles.LogoText} >살아보니 어때?</Text>       
                   </View>
@@ -174,8 +186,8 @@ const SignInScreen = ({navigation}) => {
                     </TouchableOpacity> 
                     <View style={{ alignContent: 'center', justifyContent : "center" , marginTop : 24 , marginBottom : 60 }}>
                       <Text style={styles.prviateText}>로그인함으로써 개인정보취급방침과</Text>
-                      <Text style={styles.prviateText}>이용약관에 동의하는 것으로 간주합니다.</Text>                      
-                    </View>
+                      <Text style={styles.prviateText} onPress={setInitlizeApp}>이용약관에 동의하는 것으로 간주합니다.</Text>                      
+                    </View>                  
                   </View>                                  
               </View>
               )

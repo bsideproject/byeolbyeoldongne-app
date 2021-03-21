@@ -1,7 +1,7 @@
 import React , { useEffect , useState , useLayoutEffect  } from 'react';
 import { View, Text, StyleSheet , TextInput ,TouchableOpacity, Image   } from 'react-native';
-import {Theme} from "../module/Theme";
 import {UserAPI } from "../module/ServerAPI"
+import theme from '../context/theme';
 
 const SignUpScreen = ({ navigation , route}) => {
     
@@ -82,7 +82,7 @@ const SignUpScreen = ({ navigation , route}) => {
                 onPress={OnSubmit}
             >
                 <View style={styles.rightButton}>
-                    <Text style={{color: isCorrect ? Theme.TextColor :"grey" }}>다음      </Text>
+                    <Text style={{color: isCorrect ? theme.font.search :"grey" }}>다음      </Text>
                 </View>   
             </TouchableOpacity>              
             ),    
@@ -111,7 +111,7 @@ const SignUpScreen = ({ navigation , route}) => {
                     (null)
                     :(<Image 
                     resizeMode="contain"
-                    source={require("../../assets/warn.png")}/>)
+                    source={require("../static/images/icons/warn.png")}/>)
                 }                                
                 <Text style={styles.warn}>{warnMessage}</Text> 
             </View>     
