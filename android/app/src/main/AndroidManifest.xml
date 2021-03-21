@@ -15,7 +15,7 @@
 
       <meta-data
         android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyD-GsG9cG0GJk_4Kmc49zjMx-Z3AJM5V8Q"/>   <!--Google API KEY 세팅--> 
+        android:value="Google API KEY"/>   <!--Google API KEY 세팅--> 
 
       <uses-library android:name="org.apache.http.legacy" android:required="false"/>
       
