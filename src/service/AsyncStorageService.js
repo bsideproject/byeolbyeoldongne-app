@@ -1,5 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+/**
+ * Storage key convention (ex. '__recent_search_keywords__')
+ */
 class AsyncStorageService {
     _prefix = '@ByulByulDongne';
 

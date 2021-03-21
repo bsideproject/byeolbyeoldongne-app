@@ -9,11 +9,16 @@ import {
 import theme from '../../../context/theme';
 import InputDeleteButton from '../../Buttons/InputDeleteButton';
 
-const SearchBox = ({ searchText, handleSearchBarPress, clear }) => {
+const SearchBox = ({
+    searchText,
+    handleSearchBarPress,
+    handleMenuPress,
+    clear,
+}) => {
     return (
         <TouchableNativeFeedback onPress={handleSearchBarPress}>
             <View style={styles.search}>
-                <TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={handleMenuPress}>
                     <Image
                         style={styles.gnbMenuIcon}
                         source={require('../../../static/images/icons/gnb_menu.png')}

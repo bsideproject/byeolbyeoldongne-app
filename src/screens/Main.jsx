@@ -11,16 +11,13 @@ import { initialCurrentLocation } from '../store/helper/initialStates';
 import Geolocation from '@react-native-community/geolocation';
 import { setCurrentGeolocation } from '../store/geolocation';
 import mapLocationToCoords from '../util/mapLocationToCoords';
-
-const regionTypes = {
-    GEOLOCATION: 'GEOLOCATION',
-    ADDRESS: 'ADDRESS',
-};
+import SideBar from '../components/ScreenComponent/Main/SideBar';
 
 const Main = ({ navigation }) => {
     const dispatch = useDispatch();
 
-    const [regionType, setRegionType] = useState(regionTypes.GEOLOCATION);
+    const [openSidebar, setOpenSideBar] = useState(false);
+
     const { geolocation, categories, search } = useSelector((state) => {
         const { geolocation, categories, search } = state;
         return { geolocation, categories, search };
@@ -37,61 +34,23 @@ const Main = ({ navigation }) => {
         navigation.navigate('Search');
     };
 
-    const onCurrentLocationButtonPress = () => {
-        if (regionType === regionTypes.GEOLOCATION) {
-            setRegionType(regionTypes.ADDRESS);
-            return;
-        }
-
-        Geolocation.getCurrentPosition(({ coords }) => {
-            const { latitude, longitude } = coords;
-
-            setRegionType(regionTypes.GEOLOCATION);
-            dispatch(setCurrentGeolocation(latitude, longitude));
-        });
-    };
-
-    const handleMapDragEnd = () => {
-        setRegionType(regionTypes.ADDRESS);
-    };
-
-    useEffect(() => {
-        if (currentLocation.placeId) {
-            setRegionType(regionTypes.ADDRESS);
-        }
-    }, [currentLocation.placeId]);
-
     return (
         <SafeAreaView style={styles.main}>
-            <GoogleMap
-                regionType={regionType}
-                currentLocation={mapLocationToCoords(currentLocation)}
-                geolocation={geolocation}
-                handleMapDragEnd={handleMapDragEnd}
-            />
+            <GoogleMap />
             <View style={styles.searchBox}>
                 <SearchBox
                     searchText={currentSearchText}
                     handleSearchBarPress={handleSearchBarPress}
                     clear={clearInput}
+                    handleMenuPress={() => setOpenSideBar(true)}
                 />
-                <TouchableNativeFeedback onPress={onCurrentLocationButtonPress}>
-                    <View style={styles.currentLocation}>
-                        {regionType === regionTypes.GEOLOCATION ? (
-                            <Image
-                                style={styles.currentLocationIcon}
-                                source={require('../static/images/icons/current_location_active.png')}
-                            />
-                        ) : (
-                            <Image
-                                style={styles.currentLocationIcon}
-                                source={require('../static/images/icons/current_location.png')}
-                            />
-                        )}
-                    </View>
-                </TouchableNativeFeedback>
             </View>
             <BottomBar currentCategories={currentCategories} />
+            <SideBar
+                isVisible={openSidebar}
+                handleClose={() => setOpenSideBar(false)}
+                navigation={navigation}
+            />
         </SafeAreaView>
     );
 };
@@ -105,22 +64,6 @@ const styles = StyleSheet.create({
         top: 25,
         padding: 20,
         width: '100%',
-    },
-    currentLocation: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute',
-        width: 38,
-        height: 38,
-        borderRadius: 50,
-        bottom: -50,
-        right: 20,
-        backgroundColor: theme.color.background,
-    },
-    currentLocationIcon: {
-        width: 21,
-        height: 21,
     },
 });
 

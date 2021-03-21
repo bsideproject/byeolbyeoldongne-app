@@ -87,10 +87,10 @@ export default handleActions(
         [SET_CURRENT_LOCATION]: (state, action) => ({
             ...state,
             currentLocation: {
-                addressName: action.payload.addressName,
-                placeId: action.payload.placeId,
-                placeName: action.payload.placeName,
-                roadAddress: action.payload.roadAddress,
+                addressName: action.payload.addressName || '',
+                placeId: action.payload.placeId || '',
+                placeName: action.payload.placeName || '',
+                roadAddress: action.payload.roadAddress || '',
                 x: action.payload.x,
                 y: action.payload.y,
             },
