@@ -91,7 +91,7 @@ const WelcomeScreen = ({ navigation }) => {
             <View style={styles.btnViewContainer}>                
                 <RectangleButton text={"동네후기 작성하기"} onPress={goToMain}/>                
             </View>                                                                                                             
-        </SafeAreaView>>
+        </SafeAreaView>
     ); 
 
 };
