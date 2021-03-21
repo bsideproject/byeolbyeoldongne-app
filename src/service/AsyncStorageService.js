@@ -27,6 +27,18 @@ class AsyncStorageService {
              */
         }
     };
+
+
+    clearStore = async ()=>{
+        try{
+           await AsyncStorage.clear();
+        } catch (error){
+            /**
+             * TODO: Error handling
+             */
+        }
+
+    };
 }
 
 export default new AsyncStorageService();

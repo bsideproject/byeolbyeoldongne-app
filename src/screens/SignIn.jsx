@@ -5,6 +5,7 @@ import {UserAPI } from "../module/ServerAPI" ;
 import Splash from '../components/ScreenComponent/Common/Splash';
 import inAppStorage from '../service/AsyncStorageService' ;
 import { APP_USE_STATE } from '../constants/search';
+
 /*
 / 처음 로딩화면 
 / 1.유저의 로그인 상태확인
@@ -127,6 +128,11 @@ const SignInScreen = ({navigation}) => {
     const appleSignIn = ()=>{
 
     };
+
+    const setInitlizeApp = ()=>{
+      inAppStorage.clearStore();
+      googleSignOut();
+    }
    
     return (
       <>
@@ -180,8 +186,8 @@ const SignInScreen = ({navigation}) => {
                     </TouchableOpacity> 
                     <View style={{ alignContent: 'center', justifyContent : "center" , marginTop : 24 , marginBottom : 60 }}>
                       <Text style={styles.prviateText}>로그인함으로써 개인정보취급방침과</Text>
-                      <Text style={styles.prviateText}>이용약관에 동의하는 것으로 간주합니다.</Text>                      
-                    </View>
+                      <Text style={styles.prviateText} onPress={setInitlizeApp}>이용약관에 동의하는 것으로 간주합니다.</Text>                      
+                    </View>                  
                   </View>                                  
               </View>
               )
