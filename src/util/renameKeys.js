@@ -1,9 +1,13 @@
 import _ from 'lodash';
 
-export default (obj, iteratee) => {
+const renameKeys = (obj, iteratee) => {
     const clone = _.clone(obj, true);
 
     for (const key in clone) {
+        if (_.isPlainObject(clone[key])) {
+            clone[key] = renameKeys(clone[key], iteratee);
+        }
+
         const newKey = iteratee(key);
 
         if (key !== newKey) {
@@ -14,3 +18,5 @@ export default (obj, iteratee) => {
     }
     return clone;
 };
+
+export default renameKeys;

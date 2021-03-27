@@ -3,6 +3,6 @@ export const initialCurrentLocation = {
     placeId: '',
     placeName: '',
     roadAddress: '',
-    x: 0,
-    y: 0,
+    lat: 0,
+    lng: 0,
 };

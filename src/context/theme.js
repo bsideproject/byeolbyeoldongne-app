@@ -8,7 +8,8 @@ export default {
         subBackground: '#E3E3E3',
         lightButton: '#F2F4FA',
         border: '#878787',
-        lightBorder: '#E3E3E3',        
+        lightBorder: '#E3E3E3',
+        polyLine: '#CAB5ED',
     },
     font: {
         white: '#FFFFFF',

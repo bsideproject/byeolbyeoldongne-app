@@ -54,7 +54,7 @@ const Search = ({ navigation }) => {
 
     const handleItemPress = (item, searchText) => {
         const hasItem = recentSearchKeywords.find(
-            (v) => console.log(v, item) || v.placeId === item.placeId
+            (v) => v.placeId === item.placeId
         );
 
         if (!hasItem) {
@@ -69,7 +69,7 @@ const Search = ({ navigation }) => {
         batch(() => {
             dispatch(setCurrentSearchText(searchText));
             dispatch(setCurrentLocation(item));
-            dispatch(setCoords(item.y, item.x));
+            dispatch(setCoords(item.lat, item.lng));
         });
 
         navigation.goBack();
