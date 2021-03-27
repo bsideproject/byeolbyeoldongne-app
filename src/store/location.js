@@ -10,6 +10,7 @@ import {
 import { fetchLocationByPosition } from '../api/location';
 import renameKeys from '../util/renameKeys';
 import snakeToCamel from '../util/snakeToCamel';
+import { categoryImageMap } from '../constants/category';
 
 // action types
 const prefix = '@location';
@@ -47,11 +48,13 @@ export default handleActions(
             town: createPendingState(),
         }),
         [FETCH_TOWN.SUCCESS]: (state, action) => {
+            const renamed = renameKeys(action.payload.data, snakeToCamel);
+            renamed.categoryGroupEnumsList = renamed.categoryGroupEnumsList.map(
+                (categoryName) => categoryImageMap[categoryName] || {}
+            );
             return {
                 ...state,
-                town: createSuccessState(
-                    renameKeys(action.payload.data, snakeToCamel)
-                ),
+                town: createSuccessState(renamed),
             };
         },
         [FETCH_TOWN.FAILURE]: (state, action) => ({

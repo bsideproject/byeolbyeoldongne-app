@@ -18,12 +18,8 @@ const Main = ({ navigation }) => {
 
     const [openSidebar, setOpenSideBar] = useState(false);
 
-    const { geolocation, categories, search } = useSelector((state) => {
-        const { geolocation, categories, search } = state;
-        return { geolocation, categories, search };
-    });
-    const { currentCategories } = categories;
-    const { currentLocation, currentSearchText } = search;
+    const { currentSearchText } = useSelector((state) => state.search);
+    const { town } = useSelector((state) => state.location);
 
     const handleSearchBarPress = () => {
         navigation.navigate('Search');
@@ -33,7 +29,7 @@ const Main = ({ navigation }) => {
         dispatch(setCurrentLocation(initialCurrentLocation));
         navigation.navigate('Search');
     };
-
+    console.log(town.data);
     return (
         <SafeAreaView style={styles.main}>
             <GoogleMap />
@@ -45,7 +41,11 @@ const Main = ({ navigation }) => {
                     handleMenuPress={() => setOpenSideBar(true)}
                 />
             </View>
-            <BottomBar currentCategories={currentCategories} />
+            <BottomBar
+                currentCategories={
+                    town.data ? town.data.categoryGroupEnumsList : []
+                }
+            />
             <SideBar
                 isVisible={openSidebar}
                 handleClose={() => setOpenSideBar(false)}

@@ -1,24 +1,39 @@
 import React from 'react';
-import {
-    Text,
-    View,
-    StyleSheet,
-    TouchableNativeFeedback,
-    Image,
-} from 'react-native';
+import { Text, View, StyleSheet, TouchableNativeFeedback } from 'react-native';
 import theme from '../../context/theme';
 
+const categoryImageMap = {
+    CAFE: { image: '../../static/images/categories/cafe.png', label: '카세권' }, // 카세권
+    GYM: { image: '../../static/images/categories/cafe.png', label: '운세권' }, // 운세권
+    CONVENIENCE_STORE: {
+        image: '../../static/images/categories/cafe.png',
+        label: '편세권',
+    }, // 편세권
+    MEDICAL: {
+        image: '../../static/images/categories/cafe.png',
+        label: '의세권',
+    }, // 의세권
+    FOREST: {
+        image: '../../static/images/categories/cafe.png',
+        label: '숲세권',
+    }, // 숲세권
+    HAMBUGER: {
+        image: '../../static/images/categories/cafe.png',
+        label: '햄세권',
+    }, // 햄세권
+    MART: { image: '../../static/images/categories/cafe.png', label: '몰세권' }, // 몰세권
+};
+
 const CategoryButton = ({ category, ...props }) => {
-    const { name, label } = category;
+    const { Image } = category;
+
+    if (!Image) return null;
 
     return (
         <TouchableNativeFeedback {...props}>
             <View style={styles.buttonWrapper}>
-                <Image
-                    style={styles.icon}
-                    source={require('../../static/images/categories/cafe.png')}
-                />
-                <Text style={styles.button}>{label}</Text>
+                <Image style={styles.icon} />
+                <Text style={styles.button}>{category.label}</Text>
             </View>
         </TouchableNativeFeedback>
     );
