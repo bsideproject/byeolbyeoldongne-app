@@ -11,7 +11,7 @@ import SignUpScreen from '../screens/SignUp';
 import OnBoardScreen from '../screens/OnBorad';
 import WelcomeScreen from '../screens/Welcome';
 import SearchScreen from '../screens/Search';
-import { setCurrentGeolocation } from '../store/geolocation';
+import { setCoords } from '../store/location';
 
 const Stack = createStackNavigator();
 
@@ -22,13 +22,13 @@ const Route = () => {
         Geolocation.getCurrentPosition(({ coords }) => {
             const { latitude, longitude } = coords;
 
-            dispatch(setCurrentGeolocation(latitude, longitude));
+            dispatch(setCoords(latitude, longitude));
         });
     }, []);
 
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Signin" headerMode="none">
+            <Stack.Navigator initialRouteName="Main" headerMode="none">
                 <Stack.Screen
                     name="Signin"
                     component={SignInScreen}

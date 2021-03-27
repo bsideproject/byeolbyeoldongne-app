@@ -7,7 +7,7 @@ import {
     createRequestThunkTypes,
     createSuccessState,
 } from './helper/reduxThunkHelper';
-import { fetchLocationList } from '../api/search';
+import { fetchLocationByPosition, fetchLocationList } from '../api/location';
 import renameKeys from '../util/renameKeys';
 import snakeToCamel from '../util/snakeToCamel';
 import { initialCurrentLocation } from './helper/initialStates';
@@ -18,6 +18,7 @@ const prefix = '@search';
 const FETCH_LOCATION_LIST = createRequestThunkTypes(
     `${prefix}/FETCH_LOCATION_LIST`
 );
+const FETCH_LOCATION = createRequestThunkTypes(`${prefix}/FETCH_LOCATION`);
 const INITIALIZE_FETCH_LOCATION_LIST = `${prefix}/INITIALIZE_FETCH_LOCATION_LIST`;
 const SET_CURRENT_LOCATION = `${prefix}/SET_CURRENT_LOCATION`;
 const INITIALIZE_CURRENT_LOCATION = `${prefix}/INITIALIZE_CURRENT_LOCATION`;
@@ -29,6 +30,13 @@ export const fetchLocationListAsync = (query) => {
         actionType: FETCH_LOCATION_LIST.DEFAULT,
         request: fetchLocationList,
         params: query,
+    });
+};
+export const fetchLocationAsync = (latitude, longitude) => {
+    return createRequestThunk({
+        actionType: FETCH_LOCATION.DEFAULT,
+        request: fetchLocationByPosition,
+        params: { latitude, longitude },
     });
 };
 export const initializeFetchLocationList = createAction(

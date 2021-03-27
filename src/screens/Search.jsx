@@ -14,6 +14,7 @@ import SearchHeader from '../components/Header/SearchHeader';
 import SearchResult from '../components/ScreenComponent/Search/SearchResult';
 import AsyncStorageService from '../service/AsyncStorageService';
 import { setCurrentCoords } from '../store/geolocation';
+import { setCoords } from '../store/location';
 
 const RECENT_SEARCH_STORAGE_KEY = '__recent_search_keywords__';
 
@@ -68,7 +69,7 @@ const Search = ({ navigation }) => {
         batch(() => {
             dispatch(setCurrentSearchText(searchText));
             dispatch(setCurrentLocation(item));
-            dispatch(setCurrentCoords(item.y, item.x));
+            dispatch(setCoords(item.y, item.x));
         });
 
         navigation.goBack();

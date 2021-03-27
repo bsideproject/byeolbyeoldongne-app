@@ -6,6 +6,7 @@ import { setCurrentCoords } from '../../store/geolocation';
 import theme from '../../context/theme';
 import { useDispatch, useSelector } from 'react-redux';
 import mapLocationToCoords from '../../util/mapLocationToCoords';
+import { setCoords } from '../../store/location';
 
 const regionTypes = {
     GEOLOCATION: 'GEOLOCATION',
@@ -15,10 +16,10 @@ const regionTypes = {
 const GoogleMap = ({ ...props }) => {
     const dispatch = useDispatch();
 
-    const { currentCoords } = useSelector((state) => state.geolocation);
+    const { coords } = useSelector((state) => state.location);
     const { currentLocation } = useSelector((state) => state.search);
 
-    const { latitude, longitude } = currentCoords;
+    const { latitude, longitude } = coords;
 
     const [regionType, setRegionType] = useState(regionTypes.GEOLOCATION);
     const [currentRegion, setCurrentRegion] = useState({
@@ -60,7 +61,7 @@ const GoogleMap = ({ ...props }) => {
 
             setRegionType(regionTypes.GEOLOCATION);
 
-            await dispatch(setCurrentCoords(latitude, longitude));
+            await dispatch(setCoords(latitude, longitude));
             updateRegion(latitude, longitude);
         });
     };
