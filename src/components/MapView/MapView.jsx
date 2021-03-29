@@ -43,9 +43,6 @@ const GoogleMap = ({ ...props }) => {
     };
 
     const onRegionChange = (region) => {
-        dispatch(
-            fetchTownAsync(currentLocation.latitude, currentLocation.longitude)
-        );
         setCurrentRegion(region);
     };
 
@@ -66,8 +63,15 @@ const GoogleMap = ({ ...props }) => {
     };
 
     useEffect(() => {
+        console.log('effect', latitude, longitude);
         updateRegion(latitude, longitude);
     }, [latitude, longitude]);
+
+    useEffect(() => {
+        dispatch(
+            fetchTownAsync(currentLocation.latitude, currentLocation.longitude)
+        );
+    }, [currentLocation]);
 
     return (
         <View style={styles.mapView}>

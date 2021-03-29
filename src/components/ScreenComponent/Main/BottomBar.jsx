@@ -15,7 +15,7 @@ const BottomBar = ({ currentCategories, ...props }) => {
                     currentCategories.map((category) => {
                         return (
                             <CategoryButton
-                                key={category.name}
+                                key={category}
                                 category={category}
                                 onPress={() => setSelectedCategory(category)}
                             />

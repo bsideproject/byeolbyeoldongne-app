@@ -10,7 +10,7 @@ import {
 import { fetchLocationByPosition } from '../api/location';
 import renameKeys from '../util/renameKeys';
 import snakeToCamel from '../util/snakeToCamel';
-import { categoryImageMap } from '../constants/category';
+import { round } from 'lodash';
 
 // action types
 const prefix = '@location';
@@ -23,20 +23,26 @@ export const fetchTownAsync = (latitude, longitude) => {
     return createRequestThunk({
         actionType: FETCH_TOWN.DEFAULT,
         request: fetchLocationByPosition,
-        params: { latitude, longitude },
+        params: {
+            latitude: round(latitude, 7),
+            longitude: round(longitude, 7),
+        },
     });
 };
 
 export const setCoords = createAction(SET_COORDS, (latitude, longitude) => {
-    return { latitude, longitude };
+    return {
+        latitude: round(latitude, 7),
+        longitude: round(longitude, 7),
+    };
 });
 
 // initial state
 const initialState = {
     town: createInitialState(),
     coords: {
-        latitude: 37.4979521720737,
-        longitude: 127.027638348418,
+        latitude: 37.497952,
+        longitude: 127.027638,
     },
 };
 
@@ -49,9 +55,6 @@ export default handleActions(
         }),
         [FETCH_TOWN.SUCCESS]: (state, action) => {
             const renamed = renameKeys(action.payload.data, snakeToCamel);
-            renamed.categoryGroupEnumsList = renamed.categoryGroupEnumsList.map(
-                (categoryName) => categoryImageMap[categoryName] || {}
-            );
             return {
                 ...state,
                 town: createSuccessState(renamed),

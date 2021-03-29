@@ -12,6 +12,5 @@ export const fetchLocationList = (query) => {
 };
 
 export const fetchLocationByPosition = ({ latitude, longitude }) => {
-    console.log({ latitude, longitude });
     return api.get(`/location/position?lat=${latitude}&lng=${longitude}`);
 };
