@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableNativeFeedback } from 'react-native';
 import theme from '../../context/theme';
-import CategoryIcon from '../../components/Icon/Categories';
+import CategoryIcon from '../Icon/Categories';
 
 const categoryLabels = {
     CAFE: '카세권',

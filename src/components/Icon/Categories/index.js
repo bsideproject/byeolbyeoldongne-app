@@ -64,6 +64,69 @@ const Mart = (props) => {
     );
 };
 
+const GrayCafe = (props) => {
+    return (
+        <Image
+            source={require('../../../static/images/categories/gray/cafe.png')}
+            {...props}
+        />
+    );
+};
+
+const GrayGym = (props) => {
+    return (
+        <Image
+            source={require('../../../static/images/categories/gray/gym.png')}
+            {...props}
+        />
+    );
+};
+
+const GrayConvenienceStore = (props) => {
+    return (
+        <Image
+            source={require('../../../static/images/categories/gray/convenience_store.png')}
+            {...props}
+        />
+    );
+};
+
+const GrayMedical = (props) => {
+    return (
+        <Image
+            source={require('../../../static/images/categories/gray/medical.png')}
+            {...props}
+        />
+    );
+};
+
+const GrayForest = (props) => {
+    return (
+        <Image
+            source={require('../../../static/images/categories/gray/forest.png')}
+            {...props}
+        />
+    );
+};
+
+const GrayHamberger = (props) => {
+    return (
+        <Image
+            source={require('../../../static/images/categories/gray/hamberger.png')}
+            {...props}
+        />
+    );
+};
+
+const GrayMart = (props) => {
+    return (
+        <Image
+            source={require('../../../static/images/categories/gray/mart.png')}
+            {...props}
+        />
+    );
+};
+
 export default {
     CAFE: Cafe,
     GYM: Gym,
@@ -72,4 +135,13 @@ export default {
     FOREST: Forest,
     HAMBUGER: Hamberger,
     MART: Mart,
+    gray: {
+        CAFE: GrayCafe,
+        GYM: GrayGym,
+        CONVENIENCE_STORE: GrayConvenienceStore,
+        MEDICAL: GrayMedical,
+        FOREST: GrayForest,
+        HAMBUGER: GrayHamberger,
+        MART: GrayMart,
+    },
 };
