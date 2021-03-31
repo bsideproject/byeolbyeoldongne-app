@@ -13,8 +13,8 @@ import RecentSearch from '../components/ScreenComponent/Search/RecentSearch';
 import SearchHeader from '../components/Header/SearchHeader';
 import SearchResult from '../components/ScreenComponent/Search/SearchResult';
 import AsyncStorageService from '../service/AsyncStorageService';
-import { setCurrentCoords } from '../store/geolocation';
 import { setCoords } from '../store/location';
+import { fetchReviewAsync } from '../store/review';
 
 const RECENT_SEARCH_STORAGE_KEY = '__recent_search_keywords__';
 
@@ -65,11 +65,12 @@ const Search = ({ navigation }) => {
                 newRecentKeywords
             );
         }
-
+        console.log(item.placeId);
         batch(() => {
             dispatch(setCurrentSearchText(searchText));
             dispatch(setCurrentLocation(item));
             dispatch(setCoords(item.lat, item.lng));
+            dispatch(fetchReviewAsync(item.placeId));
         });
 
         navigation.goBack();

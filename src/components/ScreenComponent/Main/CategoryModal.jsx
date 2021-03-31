@@ -7,10 +7,8 @@ import categoryContents from '../../../constants/category';
 import CategotyIcon from '../../Icon/Categories';
 
 const CategoryModal = ({ category, modalVisible, handleClose }) => {
-    console.log(category);
-
     const Icon = CategotyIcon.gray[category];
-    console.log(Icon);
+
     if (!categoryContents[category] || !Icon) return null;
 
     return (

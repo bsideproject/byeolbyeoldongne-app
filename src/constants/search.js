@@ -4,5 +4,5 @@ export const SEARCH_LIST_ITEM_TYPE = {
 };
 
 export const APP_USE_STATE = {
-    AT_LEAST_ONCE : "AtLeastOnce" ,
+    AT_LEAST_ONCE: 'AtLeastOnce',
 };

@@ -6,7 +6,7 @@ import theme from '../../../context/theme';
 
 const SideBar = ({ navigation, isVisible, handleClose, ...props }) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
-    console.log(isVisible);
+
     return (
         <Modal
             isVisible={isVisible}

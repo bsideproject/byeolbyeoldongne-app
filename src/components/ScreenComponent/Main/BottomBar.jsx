@@ -5,7 +5,13 @@ import CategoryButton from '../../Buttons/CategoryButton';
 import NoMessage from '../../Messages/NoMessage';
 import CategoryModal from './CategoryModal';
 
-const BottomBar = ({ currentCategories, ...props }) => {
+const BottomBar = ({
+    currentCategories,
+    hasReview,
+    averagePoint,
+    handleMoreButtonPress,
+    ...props
+}) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
 
     return (
@@ -30,27 +36,47 @@ const BottomBar = ({ currentCategories, ...props }) => {
             </View>
             <View style={styles.divider} />
             <View style={styles.evaluationBar}>
-                <Text style={styles.evaluationBarText}>동네 거주 평점</Text>
-                <View style={styles.evaluationRate}>
-                    <Image
-                        style={styles.starIcon}
-                        source={require('../../../static/images/icons/star.png')}
-                    />
-                    <Text style={styles.evaluationRateText}>3.75</Text>
-                </View>
-                <TouchableOpacity style={styles.moreButton}>
-                    <Text style={styles.moreButtonText}>더보기</Text>
-                    <Image
-                        style={styles.arrowRightIcon}
-                        source={require('../../../static/images/icons/arrowRight.png')}
-                    />
-                </TouchableOpacity>
+                {hasReview ? (
+                    <React.Fragment>
+                        <Text style={styles.evaluationBarText}>
+                            동네 거주 평점
+                        </Text>
+                        <View style={styles.evaluationRate}>
+                            <Image
+                                style={styles.starIcon}
+                                source={require('../../../static/images/icons/star.png')}
+                            />
+                            <Text style={styles.evaluationRateText}>
+                                {averagePoint}
+                            </Text>
+                        </View>
+                        <TouchableOpacity
+                            style={styles.moreButton}
+                            onPress={handleMoreButtonPress}
+                        >
+                            <Text style={styles.moreButtonText}>더보기</Text>
+                            <Image
+                                style={styles.arrowRightIcon}
+                                source={require('../../../static/images/icons/arrowRight.png')}
+                            />
+                        </TouchableOpacity>
+                    </React.Fragment>
+                ) : (
+                    <View style={styles.noReviewMessage}>
+                        <NoMessage
+                            text="아직 등록된 동네 후기가 없어요."
+                            imoji={require('../../../static/images/imoji/imoji_cry.png')}
+                        />
+                    </View>
+                )}
             </View>
+
             <View
                 style={styles.writingIconWrapper}
-                transform={[{ translateX: -32.5 }]}
+                transform={[{ translateX: -37.5 }]}
             >
                 <Image
+                    resizeMode="contain"
                     style={styles.writingIcon}
                     source={require('../../../static/images/icons/main_bottom_writing.png')}
                 />
@@ -75,14 +101,13 @@ const styles = StyleSheet.create({
     },
     writingIconWrapper: {
         position: 'absolute',
-        width: 65,
-        height: 65,
+        width: 85,
         top: -32.5,
         left: '50%',
         overflow: 'hidden',
     },
     writingIcon: {
-        width: 65,
+        width: 85,
         height: 95,
     },
     imojiIcon: {
@@ -166,6 +191,10 @@ const styles = StyleSheet.create({
     arrowRightIcon: {
         width: 3,
         height: 7,
+    },
+    noReviewMessage: {
+        flex: 1,
+        alignItems: 'center',
     },
 });
 

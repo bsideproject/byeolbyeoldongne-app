@@ -11,6 +11,7 @@ import SignUpScreen from '../screens/SignUp';
 import OnBoardScreen from '../screens/OnBorad';
 import WelcomeScreen from '../screens/Welcome';
 import SearchScreen from '../screens/Search';
+import ReviewScreen from '../screens/Review';
 import { setCoords } from '../store/location';
 
 const Stack = createStackNavigator();
@@ -52,6 +53,7 @@ const Route = () => {
                     }}
                 />
                 <Stack.Screen name="Search" component={SearchScreen} />
+                <Stack.Screen name="Review" component={ReviewScreen} />
                 <Stack.Screen name="Settings" component={SettingScreen} />
                 <Stack.Screen
                     name="Onboard"

@@ -63,7 +63,6 @@ const GoogleMap = ({ ...props }) => {
     };
 
     useEffect(() => {
-        console.log('effect', latitude, longitude);
         updateRegion(latitude, longitude);
     }, [latitude, longitude]);
 
@@ -99,15 +98,15 @@ const GoogleMap = ({ ...props }) => {
                     coordinates={
                         townLine
                             ? [
-                                {
-                                    latitude: townLine.startLocation.lng,
-                                    longitude: townLine.startLocation.lat,
-                                },
-                                {
-                                    latitude: townLine.endLocation.lng,
-                                    longitude: townLine.endLocation.lat,
-                                },
-                            ]
+                                  {
+                                      latitude: townLine.startLocation.lng,
+                                      longitude: townLine.startLocation.lat,
+                                  },
+                                  {
+                                      latitude: townLine.endLocation.lng,
+                                      longitude: townLine.endLocation.lat,
+                                  },
+                              ]
                             : []
                     }
                     strokeColor={theme.color.polyLine}
