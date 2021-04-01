@@ -10,32 +10,35 @@ const countStars = (number) => {
     return stars + 0.5;
 };
 
-const StarPoint = ({ count }) => {
+const StarPoint = ({ count, small }) => {
     if (typeof count !== 'number') return null;
 
     const stars = countStars(count);
+    console.log(count, stars);
+    const starStyle = small ? styles.smallStarIcon : styles.starIcon;
+
     return (
         <View style={styles.stars}>
-            <Image
-                style={styles.starIcon}
-                source={require('../../../static/images/icons/filled_star.png')}
-            />
-            <Image
-                style={styles.starIcon}
-                source={require('../../../static/images/icons/empty_star.png')}
-            />
-            <Image
-                style={styles.starIcon}
-                source={require('../../../static/images/icons/empty_star.png')}
-            />
-            <Image
-                style={styles.starIcon}
-                source={require('../../../static/images/icons/empty_star.png')}
-            />
-            <Image
-                style={styles.starIcon}
-                source={require('../../../static/images/icons/empty_star.png')}
-            />
+            {new Array(5).fill(null).map((_, i) => {
+                if (i > stars) {
+                    return (
+                        <Image
+                            key={i}
+                            style={starStyle}
+                            source={require('../../../static/images/icons/empty_star.png')}
+                        />
+                    );
+                }
+                if (i <= stars) {
+                    return (
+                        <Image
+                            key={i}
+                            style={starStyle}
+                            source={require('../../../static/images/icons/filled_star.png')}
+                        />
+                    );
+                }
+            })}
         </View>
     );
 };
@@ -43,12 +46,17 @@ const StarPoint = ({ count }) => {
 const styles = StyleSheet.create({
     stars: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        width: 150,
+        justifyContent: 'center',
     },
     starIcon: {
         width: 25,
         height: 25,
+        margin: 3.5,
+    },
+    smallStarIcon: {
+        width: 15,
+        height: 15,
+        margin: 2,
     },
 });
 

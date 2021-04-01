@@ -43,7 +43,7 @@ export default handleActions(
             const renamed = renameKeys(action.payload.data, snakeToCamel);
             return {
                 ...state,
-                reviews: createSuccessState(action.payload.data),
+                reviews: createSuccessState(renamed),
                 averagePoint: calAverageReviews(renamed),
             };
         },
