@@ -12,6 +12,8 @@ import OnBoardScreen from '../screens/OnBorad';
 import WelcomeScreen from '../screens/Welcome';
 import SearchScreen from '../screens/Search';
 import { setCurrentGeolocation } from '../store/geolocation';
+import ReviewEditScreen from '../screens/ReviewEdit';
+
 
 const Stack = createStackNavigator();
 
@@ -51,6 +53,7 @@ const Route = () => {
                         headerShown: false,
                     }}
                 />
+                <Stack.Screen name="ReviewEdit" component={ReviewEditScreen}/>
                 <Stack.Screen name="Search" component={SearchScreen} />
                 <Stack.Screen name="Settings" component={SettingScreen} />
                 <Stack.Screen

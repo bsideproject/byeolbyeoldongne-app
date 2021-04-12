@@ -5,7 +5,7 @@ import CategoryButton from '../../Buttons/CategoryButton';
 import NoMessage from '../../Messages/NoMessage';
 import CategoryModal from './CategoryModal';
 
-const BottomBar = ({ currentCategories, ...props }) => {
+const BottomBar = ({ currentCategories, handleWritePress, ...props }) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
 
     return (
@@ -50,10 +50,12 @@ const BottomBar = ({ currentCategories, ...props }) => {
                 style={styles.writingIconWrapper}
                 transform={[{ translateX: -32.5 }]}
             >
-                <Image
-                    style={styles.writingIcon}
-                    source={require('../../../static/images/icons/main_bottom_writing.png')}
-                />
+                <TouchableOpacity activeOpacity={1} onPress={handleWritePress}>
+                    <Image
+                        style={styles.writingIcon}
+                        source={require('../../../static/images/icons/main_bottom_writing.png')}
+                    />
+                </TouchableOpacity>
             </View>
             <CategoryModal
                 modalVisible={!!selectedCategory}

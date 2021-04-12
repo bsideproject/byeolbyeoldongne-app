@@ -72,13 +72,13 @@ const SignInScreen = ({navigation}) => {
               return 
             
             switch (SignIn.code) {
-              case "02":  
+              case "01":  
                 //신규회원
                 //닉네임 입력으로 화면전환.
                 navigation.navigate('Signup',{ email : user.user.email });
                 break;
               
-              case "01" : 
+              case "02" : 
                 //기존 회원이므로 메인화면으로
                 //닉네임을 포함하여 전달..               
                 navigation.navigate('Main');
