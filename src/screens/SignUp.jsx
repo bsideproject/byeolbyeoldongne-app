@@ -1,7 +1,8 @@
 import React , { useEffect , useState , useLayoutEffect  } from 'react';
 import { View, Text, StyleSheet , TextInput ,TouchableOpacity, Image   } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
 import {UserAPI } from "../module/ServerAPI"
-import theme from '../context/theme';
+import SignUpHeader from '../components/Header/SignUpHeader';
 
 const SignUpScreen = ({ navigation , route}) => {
     
@@ -10,8 +11,7 @@ const SignUpScreen = ({ navigation , route}) => {
     const LENGTH_WARNING = "1자~10자 이내의 닉네임을 입력해주세요.";
     const NO_WARNING = "";
 
-    const [ isCorrect , setIsCorrect] = useState(false);
-    const [ btnNextColor , setBtnNextColor]  = useState("grey");
+    const [ isCorrect , setIsCorrect] = useState(false);    
     const [ userMail , setUserMail] = useState("");
     const [ userNickName , setUserNickName ]  = useState("");   
     const [ warnMessage , setWarnMessage] = useState(NOTEXT_WARNING);
@@ -72,64 +72,52 @@ const SignUpScreen = ({ navigation , route}) => {
     }, []);
 
 
-    useEffect(()=>{
-        navigation.setOptions({
-            title : '',           
-            headerTransparent : true ,
-            headerLeft : ()=>(<View></View>),
-            headerRight : ()=> (
-            <TouchableOpacity activeOpacity={1}                
-                onPress={OnSubmit}
-            >
-                <View style={styles.rightButton}>
-                    <Text style={{color: isCorrect ? theme.font.search :"grey" }}>다음      </Text>
-                </View>   
-            </TouchableOpacity>              
-            ),    
-        }) ;       
-    },[isCorrect]) ;
     
     return (
-        <View style={styles.container}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}> 반가워요! </Text>           
-                <Text style={styles.title}> 닉네임을 알려주세요</Text>
-            </View>            
-            <TextInput 
-                style={styles.nickname}
-                placeholderTextColor='grey' 
-                placeholder={"별별동네"}
-                value={userNickName}  
-                autoFocus={true}              
-                onChange={OnChangeNickName}
-                returnKeyType="send"
-                onSubmitEditing={()=>{OnSubmit}}                              
-            >            
-            </TextInput>
-            <View style={styles.WarnContainer}>
-                {   warnMessage == "" ? 
-                    (null)
-                    :(<Image 
-                    resizeMode="contain"
-                    source={require("../static/images/icons/warn.png")}/>)
-                }                                
-                <Text style={styles.warn}>{warnMessage}</Text> 
-            </View>     
-                  
-        </View>
+        <SafeAreaView style={styles.main}>
+            <View style={styles.container}>
+                <SignUpHeader handlePressNext={OnSubmit} enableNext={isCorrect} />
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}> 반가워요! </Text>           
+                    <Text style={styles.title}> 닉네임을 알려주세요</Text>
+                </View>            
+                <TextInput 
+                    style={styles.nickname}
+                    placeholderTextColor='grey' 
+                    placeholder={"별별동네"}
+                    value={userNickName}  
+                    autoFocus={true}              
+                    onChange={OnChangeNickName}
+                    returnKeyType="send"
+                    onSubmitEditing={()=>{OnSubmit}}                              
+                >            
+                </TextInput>
+                <View style={styles.WarnContainer}>
+                    {   warnMessage == "" ? 
+                        (null)
+                        :(<Image 
+                        resizeMode="contain"
+                        source={require("../static/images/icons/warn.png")}/>)
+                    }                                
+                    <Text style={styles.warn}>{warnMessage}</Text> 
+                </View>  
+            </View>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
+    main: { ...StyleSheet.absoluteFillObject },
     container : {
         flex: 1,
         alignItems: 'center',
-        justifyContent: "center",
+        justifyContent: "flex-start",
     },
     titleContainer :{   
         width : '66%',     
         alignItems : 'flex-start',    
-        marginBottom : 50 ,         
+        marginBottom : 50 ,  
+        marginTop : 50,       
     } ,
     WarnContainer :{   
         width : '66%',     
