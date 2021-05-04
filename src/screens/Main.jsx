@@ -34,6 +34,10 @@ const Main = ({ navigation }) => {
         navigation.navigate('Search');
     };
 
+    const handleWritePress = ()=>{
+        navigation.navigate('ReviewEditText');
+    }
+
     return (
         <SafeAreaView style={styles.main}>
             <GoogleMap />
@@ -45,7 +49,10 @@ const Main = ({ navigation }) => {
                     handleMenuPress={() => setOpenSideBar(true)}
                 />
             </View>
-            <BottomBar currentCategories={currentCategories} />
+            <BottomBar 
+                currentCategories={currentCategories} 
+                handleWritePress={handleWritePress}
+            />
             <SideBar
                 isVisible={openSidebar}
                 handleClose={() => setOpenSideBar(false)}

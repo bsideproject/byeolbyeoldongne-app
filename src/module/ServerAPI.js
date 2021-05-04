@@ -64,3 +64,8 @@ export const UserAPI = {
 export const MapAPI = {
     SearchAddress : (params)=> getResponse("/location/list/kakao" , params)
 }
+
+export const ReviewAPI = {
+    AddReview : (reviewData) => getPostResponse(`/location/place/review/${reviewData.placeid}`,reviewData ) 
+
+}
