@@ -14,5 +14,5 @@ export default (reviews) => {
         return acc + trafficPoint + conveniencePoint + noisePoint + safetyPoint;
     }, 0);
 
-    return round(total / (reviews.length * 4), 3);
+    return round(total / (reviews.length * 4), 2);
 };

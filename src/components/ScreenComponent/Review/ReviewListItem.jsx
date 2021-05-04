@@ -1,9 +1,9 @@
-import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import SearchListItem from '../../ListItem/Search';
-import { SEARCH_LIST_ITEM_TYPE } from '../../../constants/search';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import StarPoint from '../../Icon/StarPoint';
 import theme from '../../../context/theme';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+import ReviewComments from './ReviewComments';
 
 const formatDate = (date) => {
     const dt = new Date(date);
@@ -11,6 +11,12 @@ const formatDate = (date) => {
 };
 
 const ReviewListItem = ({ review, ...props }) => {
+    const [openComment, setOpenComment] = useState(false);
+
+    const onPressCommentIcon = () => {
+        setOpenComment(true);
+    };
+
     return (
         <View style={styles.itemContainer}>
             <View style={styles.totalPointView}>
@@ -27,6 +33,12 @@ const ReviewListItem = ({ review, ...props }) => {
                     {review.nickname || '닉네임'}
                 </Text>
                 <Text style={styles.subContentText}>|</Text>
+                <View>
+                    <Image
+                        style={styles.clockImage}
+                        source={require('../../../static/images/icons/icon_clock.png')}
+                    />
+                </View>
                 <Text style={styles.subContentText}>
                     {formatDate(review.createdAt)}
                 </Text>
@@ -41,6 +53,27 @@ const ReviewListItem = ({ review, ...props }) => {
                 <Text style={styles.detailTitleText}>단점</Text>
                 <Text style={styles.detailText}>{review.reviewBadContent}</Text>
             </View>
+            <View style={styles.bottomView}>
+                <TouchableNativeFeedback onPress={onPressCommentIcon}>
+                    <View style={styles.iconTextView}>
+                        <Image
+                            style={styles.clockImage}
+                            source={require('../../../static/images/icons/icon_review.png')}
+                        />
+                        <Text style={styles.iconText}>
+                            {review.comments ? review.comments.length : 0}
+                        </Text>
+                    </View>
+                </TouchableNativeFeedback>
+                <View style={styles.iconTextView}>
+                    <Image
+                        style={styles.clockImage}
+                        source={require('../../../static/images/icons/icon_like.png')}
+                    />
+                    <Text style={styles.iconText}>{review.like || 0}</Text>
+                </View>
+            </View>
+            <ReviewComments comments={review.comments} />
         </View>
     );
 };
@@ -83,6 +116,26 @@ const styles = StyleSheet.create({
     detailText: {
         marginBottom: 25,
         fontSize: theme.font.size.middle,
+    },
+    clockImage: {
+        width: 11,
+        height: 11,
+        marginRight: 5,
+    },
+    bottomView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        marginBottom: 10,
+    },
+    iconTextView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 7.5,
+    },
+    iconText: {
+        fontWeight: 'normal',
+        fontSize: theme.font.size.normal,
     },
 });
 

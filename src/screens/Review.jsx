@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
     TouchableOpacity,
+    TouchableNativeFeedback,
     StyleSheet,
     Image,
     ScrollView,
@@ -15,6 +16,7 @@ import StarPoint from '../components/Icon/StarPoint';
 import PointBar from '../components/PointBar';
 import ReviewListItem from '../components/ScreenComponent/Review/ReviewListItem';
 import { round } from 'lodash';
+import SelectFilterModal from '../components/ScreenComponent/Review/SelectFilterModal';
 
 const labels = [
     { key: 'trafficPoint', label: '교통/접근성' },
@@ -26,9 +28,11 @@ const labels = [
 const getPoints = (reviews) => {
     return labels.map((label) => {
         const average = round(
-            reviews.reduce((acc, review) => {
-                return acc + review[label.key];
-            }, 0) / reviews.length,
+            reviews
+                ? reviews.reduce((acc, review) => {
+                    return acc + review[label.key];
+                }, 0) / reviews.length
+                : 0,
             1
         );
         return {
@@ -41,29 +45,37 @@ const getPoints = (reviews) => {
 };
 
 const ReviewScreen = ({ navigation }) => {
+    const [openFilter, setOpenFilter] = useState(false);
+
     const { reviews, averagePoint } = useSelector((state) => state.review);
     const { town } = useSelector((state) => state.location);
 
     const targetReviews = reviews.data;
     const targetTown = town.data;
     const points = getPoints(targetReviews);
-    const reviewListWithPoints = targetReviews.map((review) => {
-        const averagePoint = round(
-            labels.reduce((acc, label) => {
-                return acc + review[label.key];
-            }, 0) / 4,
-            2
-        );
-        return {
-            ...review,
-            averagePoint: averagePoint,
-        };
-    });
+    const reviewListWithPoints = targetReviews
+        ? targetReviews.map((review) => {
+            const averagePoint = round(
+                labels.reduce((acc, label) => {
+                    return acc + review[label.key];
+                }, 0) / 4,
+                2
+            );
+            return {
+                ...review,
+                averagePoint: averagePoint,
+            };
+          })
+        : [];
 
-    console.log(reviewListWithPoints);
+    useEffect(() => {
+        if (!targetReviews || !targetTown) {
+            navigation.navigate('Main');
+        }
+    }, []);
 
     if (!targetReviews || !targetTown) {
-        navigation.navigate('Main');
+        return null;
     }
 
     return (
@@ -71,7 +83,7 @@ const ReviewScreen = ({ navigation }) => {
             <Header handlePressBack={() => navigation.goBack()}>
                 <View style={styles.headerView}>
                     <Text style={styles.headerText}>
-                        {targetTown.roadAddress}
+                        {targetTown.roadAddress || targetTown.addressName}
                     </Text>
                 </View>
 
@@ -109,11 +121,21 @@ const ReviewScreen = ({ navigation }) => {
                 <View style={styles.centerView}>
                     <View style={styles.filterBox}>
                         <View>
-                            <Text>총 {targetReviews.length}개 후기</Text>
+                            <Text style={styles.filterText}>
+                                총 {targetReviews.length}개 후기
+                            </Text>
                         </View>
-                        <View>
-                            <Text>최신순</Text>
-                        </View>
+                        <TouchableNativeFeedback
+                            onPress={() => setOpenFilter(true)}
+                        >
+                            <View style={styles.filterView}>
+                                <Text style={styles.filterText}>최신순</Text>
+                                <Image
+                                    style={styles.arrowBottomIcon}
+                                    source={require('../static/images/icons/icon_arrow_bottom.png')}
+                                />
+                            </View>
+                        </TouchableNativeFeedback>
                     </View>
                 </View>
                 <View style={{ ...styles.thinDivider, marginTop: 0 }} />
@@ -123,6 +145,10 @@ const ReviewScreen = ({ navigation }) => {
                     })}
                 </View>
             </ScrollView>
+            <SelectFilterModal
+                modalVisible={openFilter}
+                handleClose={() => setOpenFilter(false)}
+            />
         </SafeAreaView>
     );
 };
@@ -204,6 +230,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+    },
+    filterView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    filterText: {
+        fontSize: theme.font.size.normal,
+    },
+    arrowBottomIcon: {
+        width: 5,
+        height: 2,
+        marginLeft: 5,
     },
 });
 
