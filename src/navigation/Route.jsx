@@ -12,7 +12,8 @@ import OnBoardScreen from '../screens/OnBorad';
 import WelcomeScreen from '../screens/Welcome';
 import SearchScreen from '../screens/Search';
 import { setCurrentGeolocation } from '../store/geolocation';
-import ReviewEditScreen from '../screens/ReviewEdit';
+import ReviewEditTextScreen from '../screens/ReviewEditText';
+import ReviewEditPointScreen from '../screens/ReviewEditPoint';
 
 
 const Stack = createStackNavigator();
@@ -30,7 +31,7 @@ const Route = () => {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Signin" headerMode="none">
+            <Stack.Navigator initialRouteName="Main" headerMode="none">
                 <Stack.Screen
                     name="Signin"
                     component={SignInScreen}
@@ -53,7 +54,8 @@ const Route = () => {
                         headerShown: false,
                     }}
                 />
-                <Stack.Screen name="ReviewEdit" component={ReviewEditScreen}/>
+                <Stack.Screen name="ReviewEditText" component={ReviewEditTextScreen}/>
+                <Stack.Screen name="ReviewEditPoint" component={ReviewEditPointScreen}/>
                 <Stack.Screen name="Search" component={SearchScreen} />
                 <Stack.Screen name="Settings" component={SettingScreen} />
                 <Stack.Screen

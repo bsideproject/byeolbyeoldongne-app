@@ -35,7 +35,7 @@ const Main = ({ navigation }) => {
     };
 
     const handleWritePress = ()=>{
-        navigation.navigate('ReviewEdit');
+        navigation.navigate('ReviewEditText');
     }
 
     return (

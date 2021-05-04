@@ -21,9 +21,7 @@ const SignUpScreen = ({ navigation , route}) => {
     const OnSubmit = async ()=> {
         if(!isCorrect)
             return
-        
-        console.log( userMail , userNickName);       
-
+     
         const [ signup, signupError] = await UserAPI.ModifyNickName({
             email : userMail ,
             nick_name : userNickName ,

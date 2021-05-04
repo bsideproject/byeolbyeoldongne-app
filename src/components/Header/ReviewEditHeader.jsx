@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
         height: 52,
         borderBottomWidth: 1,
         borderBottomColor: theme.color.border,
+        backgroundColor : theme.color.background,
     },
     headertitle: {
         flex: 1,    

@@ -1,31 +1,34 @@
 
 
-import { View, Text ,StyleSheet ,Image, TouchableOpacity } from 'react-native';
+import { View, Text ,StyleSheet ,Image, TouchableOpacity, TextInput , Keyboard, TouchableNativeFeedback } from 'react-native';
 import React from 'react';
 import theme from '../../../context/theme';
+
 
 
 
 const AddrPresenter = ( { AddrString })=>{
 
     return (
-        <View style={styles.maincontainer} >
-            <View style={styles.containerMarker}>
-                <Image
-                    style={styles.MarkerIcon}   
-                    resizeMode="contain"                 
-                    source={require('../../../static/images/map/marker.png')}
-                />
-            </View>
-            <View style={styles.containerAddr}> 
-                <Text style={styles.AddrText}>{AddrString}</Text>
-            </View>
-            <TouchableOpacity>
-                <View style={styles.containerChngLocation}>                
-                    <Text style={styles.ChngLocationText}>{'위치변경 > '}</Text>                
+        <TouchableNativeFeedback onPress={()=> Keyboard.dismiss()}>
+            <View style={styles.maincontainer} >
+                <View style={styles.containerMarker}>
+                    <Image
+                        style={styles.MarkerIcon}   
+                        resizeMode="contain"                 
+                        source={require('../../../static/images/map/marker.png')}
+                    />
                 </View>
-            </TouchableOpacity>                           
-        </View>
+                <View style={styles.containerAddr}> 
+                    <Text style={styles.AddrText}>{AddrString}</Text>
+                </View>                           
+                <TouchableOpacity>
+                    <View style={styles.containerChngLocation}>                
+                        <Text style={styles.ChngLocationText}>{'위치변경 > '}</Text>                
+                    </View>
+                </TouchableOpacity>                           
+            </View>
+        </TouchableNativeFeedback>
     );
 }
 
@@ -36,7 +39,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',        
-        height: 90,                     
+        height: 100, 
+        backgroundColor : theme.color.background ,                     
     },
     containerMarker: {       
         display: 'flex',
@@ -72,7 +76,7 @@ const styles = StyleSheet.create({
     },
     ChngLocationText : {
         fontSize : theme.font.size.small ,
-        textAlign : "center" ,   
+        textAlign : "center" ,           
         color : "grey" ,
         paddingBottom : 5,
     }
