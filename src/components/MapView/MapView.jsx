@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Image, StyleSheet, TouchableNativeFeedback, View } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
-import { setCurrentCoords } from '../../store/geolocation';
 import theme from '../../context/theme';
 import { useDispatch, useSelector } from 'react-redux';
-import mapLocationToCoords from '../../util/mapLocationToCoords';
+import { fetchTownAsync, setCoords } from '../../store/location';
 
 const regionTypes = {
     GEOLOCATION: 'GEOLOCATION',
@@ -15,10 +14,12 @@ const regionTypes = {
 const GoogleMap = ({ ...props }) => {
     const dispatch = useDispatch();
 
-    const { currentCoords } = useSelector((state) => state.geolocation);
+    const { coords, town } = useSelector((state) => state.location);
     const { currentLocation } = useSelector((state) => state.search);
 
-    const { latitude, longitude } = currentCoords;
+    const { latitude, longitude } = coords;
+    const townInfo = town.data;
+    const townLine = townInfo && townInfo.locationLineByAddressNameResponse;
 
     const [regionType, setRegionType] = useState(regionTypes.GEOLOCATION);
     const [currentRegion, setCurrentRegion] = useState({
@@ -42,10 +43,6 @@ const GoogleMap = ({ ...props }) => {
     };
 
     const onRegionChange = (region) => {
-        // if (currentLocation.placeId) {
-        //     setRegionType(regionTypes.ADDRESS);
-        // }
-
         setCurrentRegion(region);
     };
 
@@ -60,7 +57,7 @@ const GoogleMap = ({ ...props }) => {
 
             setRegionType(regionTypes.GEOLOCATION);
 
-            await dispatch(setCurrentCoords(latitude, longitude));
+            await dispatch(setCoords(latitude, longitude));
             updateRegion(latitude, longitude);
         });
     };
@@ -69,11 +66,11 @@ const GoogleMap = ({ ...props }) => {
         updateRegion(latitude, longitude);
     }, [latitude, longitude]);
 
-    // useEffect(() => {
-    //     const { latitude, longitude } = mapLocationToCoords(currentLocation);
-    //     console.log('location');
-    //     updateRegion(latitude, longitude);
-    // }, [currentLocation]);
+    useEffect(() => {
+        dispatch(
+            fetchTownAsync(currentLocation.latitude, currentLocation.longitude)
+        );
+    }, [currentLocation]);
 
     return (
         <View style={styles.mapView}>
@@ -96,6 +93,26 @@ const GoogleMap = ({ ...props }) => {
                     // title={marker.title}
                     // description={marker.description}
                     image={require('../../static/images/map/marker.png')}
+                />
+                <Polyline
+                    coordinates={
+                        townLine
+                            ? [
+                                  {
+                                      latitude: townLine.startLocation.lng,
+                                      longitude: townLine.startLocation.lat,
+                                  },
+                                  {
+                                      latitude: townLine.endLocation.lng,
+                                      longitude: townLine.endLocation.lat,
+                                  },
+                              ]
+                            : []
+                    }
+                    strokeColor={theme.color.polyLine}
+                    strokeColors={[theme.color.polyLine]}
+                    fillColor={theme.color.polyLine}
+                    strokeWidth={10}
                 />
             </MapView>
 

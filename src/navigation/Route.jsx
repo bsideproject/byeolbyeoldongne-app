@@ -14,7 +14,8 @@ import SearchScreen from '../screens/Search';
 import { setCurrentGeolocation } from '../store/geolocation';
 import ReviewEditTextScreen from '../screens/ReviewEditText';
 import ReviewEditPointScreen from '../screens/ReviewEditPoint';
-
+import ReviewScreen from '../screens/Review';
+import { setCoords } from '../store/location';
 
 const Stack = createStackNavigator();
 
@@ -25,7 +26,7 @@ const Route = () => {
         Geolocation.getCurrentPosition(({ coords }) => {
             const { latitude, longitude } = coords;
 
-            dispatch(setCurrentGeolocation(latitude, longitude));
+            dispatch(setCoords(latitude, longitude));
         });
     }, []);
 
@@ -54,9 +55,16 @@ const Route = () => {
                         headerShown: false,
                     }}
                 />
-                <Stack.Screen name="ReviewEditText" component={ReviewEditTextScreen}/>
-                <Stack.Screen name="ReviewEditPoint" component={ReviewEditPointScreen}/>
+                <Stack.Screen
+                    name="ReviewEditText"
+                    component={ReviewEditTextScreen}
+                />
+                <Stack.Screen
+                    name="ReviewEditPoint"
+                    component={ReviewEditPointScreen}
+                />
                 <Stack.Screen name="Search" component={SearchScreen} />
+                <Stack.Screen name="Review" component={ReviewScreen} />
                 <Stack.Screen name="Settings" component={SettingScreen} />
                 <Stack.Screen
                     name="Onboard"

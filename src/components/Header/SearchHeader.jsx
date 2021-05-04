@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import theme from '../../context/theme';
 import InputDeleteButton from '../Buttons/InputDeleteButton';
+import Header from './index';
 
 const SearchHeader = ({
     handlePressBack,
@@ -19,16 +20,7 @@ const SearchHeader = ({
     ...props
 }) => {
     return (
-        <View style={styles.search}>
-            <TouchableOpacity onPress={handlePressBack}>
-                <View style={styles.gnbBack}>
-                    <Image
-                        style={styles.gnbBackIcon}
-                        source={require('../../static/images/icons/gnb_back.png')}
-                    />
-                </View>
-            </TouchableOpacity>
-            {<View />}
+        <Header handlePressBack={handlePressBack}>
             <View style={styles.searchBox}>
                 <TextInput
                     returnKeyType="search"
@@ -51,7 +43,7 @@ const SearchHeader = ({
                     <Text style={styles.gnbSearchText}>검색</Text>
                 </View>
             </TouchableOpacity>
-        </View>
+        </Header>
     );
 };
 

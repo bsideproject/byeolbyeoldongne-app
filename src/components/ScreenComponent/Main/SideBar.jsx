@@ -6,7 +6,7 @@ import theme from '../../../context/theme';
 
 const SideBar = ({ navigation, isVisible, handleClose, ...props }) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
-    console.log(isVisible);
+
     return (
         <Modal
             isVisible={isVisible}
@@ -16,89 +16,77 @@ const SideBar = ({ navigation, isVisible, handleClose, ...props }) => {
             animationOut="slideOutLeft"
             onBackdropPress={handleClose}
             backdropOpacity={0.3}
+            style={{ margin: 0 }}
             {...props}
         >
-            <View style={styles.innerModal}>
-                <View style={styles.sideBar}>
-                    <View style={styles.profile}>
-                        <View style={styles.profileName}>
-                            <Text style={styles.profileText}>별별동네</Text>
-                            <Image
-                                source={require('../../../static/images/icons/arrow_right_opacity.png')}
-                            />
-                        </View>
-                        <View style={styles.profileEmail}>
-                            <Image
-                                style={styles.smallIcon}
-                                source={require('../../../static/images/icons/google_profile.png')}
-                            />
-                            <Text style={styles.profileEmailText}>
-                                bb.dongne@gmail.com
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.notifications}>
+            <View style={styles.sideBar}>
+                <View style={styles.profile}>
+                    <View style={styles.profileName}>
+                        <Text style={styles.profileText}>별별동네</Text>
                         <Image
-                            style={styles.mediumIcon}
-                            source={require('../../../static/images/icons/icon_bell.png')}
-                        />
-                        <Image
-                            style={styles.mediumIcon}
-                            source={require('../../../static/images/icons/settings.png')}
+                            source={require('../../../static/images/icons/arrow_right_opacity.png')}
                         />
                     </View>
-                    <View style={styles.menus}>
-                        <TouchableOpacity>
-                            <View style={styles.menu}>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={require('../../../static/images/icons/love.png')}
-                                />
-                                <Text style={styles.menuText}>
-                                    나의 관심 동네
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style={styles.menu}>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={require('../../../static/images/icons/icon_message.png')}
-                                />
-                                <Text style={styles.menuText}>
-                                    내가 작성한 후기
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style={styles.menu}>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={require('../../../static/images/icons/icon_write.png')}
-                                />
-                                <Text style={styles.menuText}>
-                                    내가 작성한 댓글
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
+                    <View style={styles.profileEmail}>
+                        <Image
+                            style={styles.smallIcon}
+                            source={require('../../../static/images/icons/google_profile.png')}
+                        />
+                        <Text style={styles.profileEmailText}>
+                            bb.dongne@gmail.com
+                        </Text>
                     </View>
                 </View>
-                {/*<View style={styles.background} />*/}
+                <View style={styles.notifications}>
+                    <Image
+                        style={styles.mediumIcon}
+                        source={require('../../../static/images/icons/icon_bell.png')}
+                    />
+                    <Image
+                        style={styles.mediumIcon}
+                        source={require('../../../static/images/icons/settings.png')}
+                    />
+                </View>
+                <View style={styles.menus}>
+                    <TouchableOpacity>
+                        <View style={styles.menu}>
+                            <Image
+                                style={styles.menuIcon}
+                                source={require('../../../static/images/icons/love.png')}
+                            />
+                            <Text style={styles.menuText}>나의 관심 동네</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <View style={styles.menu}>
+                            <Image
+                                style={styles.menuIcon}
+                                source={require('../../../static/images/icons/icon_message.png')}
+                            />
+                            <Text style={styles.menuText}>
+                                내가 작성한 후기
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <View style={styles.menu}>
+                            <Image
+                                style={styles.menuIcon}
+                                source={require('../../../static/images/icons/icon_write.png')}
+                            />
+                            <Text style={styles.menuText}>
+                                내가 작성한 댓글
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
+            {/*<View style={styles.background} />*/}
         </Modal>
     );
 };
 
 const styles = StyleSheet.create({
-    innerModal: {
-        display: 'flex',
-        flexDirection: 'row',
-        width: '70%',
-        height: '100%',
-
-        position: 'absolute',
-        left: -20,
-    },
     sideBar: {
         flex: 2,
         display: 'flex',
@@ -107,6 +95,7 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: theme.color.background,
 
+        paddingTop: '10%',
         position: 'relative',
     },
     background: {
@@ -166,7 +155,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
         right: 20,
-        top: 26,
+        top: '9%',
     },
     menus: {
         paddingLeft: 20,

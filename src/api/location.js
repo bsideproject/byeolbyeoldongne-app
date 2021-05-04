@@ -7,10 +7,11 @@ import api from './index';
  * http://bbdnserver-env.eba-a4c5kpmb.ap-northeast-2.elasticbeanstalk.com/location/position?lat=37.4802164414085&lng=126.91255503749
  */
 export const fetchLocationList = (query) => {
-    console.log(`/location/list/place?query=${query}`);
     return api.get(`/location/list/place?query=${query}`);
 };
 
-export const fetchLocationByPosition = ({ lat, lng }) => {
-    return api.get(`/location/list/place?lat=${lat}&lng=${lng}`);
+export const fetchLocationByPosition = ({ latitude, longitude }) => {
+    return api.get(
+        `/location/position?lat=${latitude}&lng=${longitude}&address_name=${'서울 서초구 양재동 89'}`
+    );
 };

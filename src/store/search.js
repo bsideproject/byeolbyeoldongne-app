@@ -7,7 +7,7 @@ import {
     createRequestThunkTypes,
     createSuccessState,
 } from './helper/reduxThunkHelper';
-import { fetchLocationList } from '../api/search';
+import { fetchLocationList } from '../api/location';
 import renameKeys from '../util/renameKeys';
 import snakeToCamel from '../util/snakeToCamel';
 import { initialCurrentLocation } from './helper/initialStates';
@@ -31,6 +31,7 @@ export const fetchLocationListAsync = (query) => {
         params: query,
     });
 };
+
 export const initializeFetchLocationList = createAction(
     INITIALIZE_FETCH_LOCATION_LIST
 );
@@ -91,8 +92,8 @@ export default handleActions(
                 placeId: action.payload.placeId || '',
                 placeName: action.payload.placeName || '',
                 roadAddress: action.payload.roadAddress || '',
-                x: action.payload.x,
-                y: action.payload.y,
+                latitude: action.payload.lat,
+                longitude: action.payload.lng,
             },
         }),
         [INITIALIZE_CURRENT_LOCATION]: (state) => ({
