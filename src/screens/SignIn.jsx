@@ -17,6 +17,8 @@ import { UserAPI } from '../module/ServerAPI';
 import Splash from '../components/ScreenComponent/Common/Splash';
 import inAppStorage from '../service/AsyncStorageService';
 import { APP_USE_STATE } from '../constants/search';
+import { setUser } from '../store/user';
+import { useDispatch } from 'react-redux';
 
 /*
 / 처음 로딩화면
@@ -29,6 +31,8 @@ const GOOGLE_LOGO = '../static/images/icons/google_logo.png';
 const APPLE_LOGO = '../static/images/icons/apple_logo.png';
 
 const SignInScreen = ({ navigation }) => {
+    const dispatch = useDispatch();
+
     const [init, setInit] = useState(true);
     const [isLoggedin, setIsLoggedIn] = useState(false);
     const [userInfo, setUserInfo] = useState(null);
@@ -70,30 +74,38 @@ const SignInScreen = ({ navigation }) => {
     //구글 로그인
     const googleSignIn = async () => {
         try {
+            const currentUser = await inAppStorage.getItem('google_user');
+            console.log(currentUser);
+            if (currentUser) {
+                dispatch(setUser(currentUser));
+                navigation.navigate('Main');
+                return;
+            }
             await GoogleSignin.hasPlayServices();
             const user = await GoogleSignin.signIn();
 
-            setUserInfo(user);
+            inAppStorage.setItem('google_user', user.user);
+            dispatch(setUser(user.user));
             const [SignIn, SignInError] = await UserAPI.SignInGoogle(user);
 
             if (SignInError) return;
 
             switch (SignIn.code) {
-                case '01':
-                //신규회원
-                //닉네임 입력으로 화면전환.
-                navigation.navigate('Signup', { email: user.user.email });
-                break;
+            case '01':
+                    //신규회원
+                    //닉네임 입력으로 화면전환.
+                    navigation.navigate('Signup', { email: user.user.email });
+                    break;
 
-                case '02':
-                //기존 회원이므로 메인화면으로
-                //닉네임을 포함하여 전달..
-                navigation.navigate('Main');
-                break;
+            case '02':
+                    //기존 회원이므로 메인화면으로
+                    //닉네임을 포함하여 전달..
+                    navigation.navigate('Main');
+                    break;
 
-                case '99':
-                //처리오류
-                break;
+            case '99':
+                    //처리오류
+                    break;
             }
         } catch (error) {
             if ((error.code = statusCodes.SIGN_IN_CANCELLED)) {
@@ -138,98 +150,101 @@ const SignInScreen = ({ navigation }) => {
         googleSignOut();
     };
 
+    if (init) {
+        return <Splash />;
+    }
+
     return (
         <>
-            {init ? (
-                <Splash />
-            ) : //로딩완료됨.
-            //1.로그인 화면 or 2.온보딩화면으로 넘어감.
-            isFirstRun ? (
+            {
+                //1.로그인 화면 or 2.온보딩화면으로 넘어감.
+                isFirstRun ? (
                     <View />
-            ) : (
-                <View style={styles.home}>
-                    <ImageBackground
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                        }}
-                        resizeMode="cover"
-                        source={require('../static/images/bgimages/bkimg_login.png')}
-                    >
-                        <View style={styles.overLay} />
-                    </ImageBackground>
-                    <View style={styles.LogoContainer}>
-                        <Image
+                ) : (
+                    <View style={styles.home}>
+                        <ImageBackground
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                            }}
                             resizeMode="cover"
-                            source={require('../static/images/symbol/logo_bbdongne.png')}
-                        />
-                        <Text style={styles.LogoText}>살아보니 어때?</Text>
-                    </View>
-                    <View
-                        style={{
-                            flexDirection: 'column',
-                                alignContent: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: 'transparent',
-                            width: '60%',
-                        }}
-                    >
-                        <TouchableOpacity
-                            style={styles.RoundStyle}
-                            activeOpacity={0.8}
-                            onPress={appleSignIn}
+                            source={require('../static/images/bgimages/bkimg_login.png')}
                         >
-                            <View style={styles.btnContainer}>
-                                <Image
-                                    resizeMode="cover"
-                                    source={require(APPLE_LOGO)}
-                                    style={{ marginLeft: 20 }}
-                                />
-                                <Text style={styles.btnText}>
-                                    Apple로 로그인
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.RoundStyle}
-                            activeOpacity={0.8}
-                            onPress={googleSignIn}
-                        >
-                            <View style={styles.btnContainer}>
-                                <Image
-                                    resizeMode="cover"
-                                    source={require(GOOGLE_LOGO)}
-                                    style={{ marginLeft: 20 }}
-                                />
-                                <Text style={styles.btnText}>
-                                    Google로 로그인
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
+                            <View style={styles.overLay} />
+                        </ImageBackground>
+                        <View style={styles.LogoContainer}>
+                            <Image
+                                resizeMode="cover"
+                                source={require('../static/images/symbol/logo_bbdongne.png')}
+                            />
+                            <Text style={styles.LogoText}>살아보니 어때?</Text>
+                        </View>
                         <View
                             style={{
+                                flexDirection: 'column',
                                 alignContent: 'center',
                                 justifyContent: 'center',
-                                marginTop: 24,
-                                marginBottom: 60,
+                                backgroundColor: 'transparent',
+                                width: '60%',
                             }}
                         >
-                            <Text style={styles.prviateText}>
-                                로그인함으로써 개인정보취급방침과
-                            </Text>
-                            <Text
-                                style={styles.prviateText}
-                                onPress={setInitlizeApp}
+                            <TouchableOpacity
+                                style={styles.RoundStyle}
+                                activeOpacity={0.8}
+                                onPress={appleSignIn}
                             >
-                                이용약관에 동의하는 것으로 간주합니다.
-                            </Text>
+                                <View style={styles.btnContainer}>
+                                    <Image
+                                        resizeMode="cover"
+                                        source={require(APPLE_LOGO)}
+                                        style={{ marginLeft: 20 }}
+                                    />
+                                    <Text style={styles.btnText}>
+                                        Apple로 로그인
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.RoundStyle}
+                                activeOpacity={0.8}
+                                onPress={googleSignIn}
+                            >
+                                <View style={styles.btnContainer}>
+                                    <Image
+                                        resizeMode="cover"
+                                        source={require(GOOGLE_LOGO)}
+                                        style={{ marginLeft: 20 }}
+                                    />
+                                    <Text style={styles.btnText}>
+                                        Google로 로그인
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                            <View
+                                style={{
+                                    alignContent: 'center',
+                                    justifyContent: 'center',
+                                    marginTop: 24,
+                                    marginBottom: 60,
+                                }}
+                            >
+                                <Text style={styles.prviateText}>
+                                    로그인함으로써 개인정보취급방침과
+                                </Text>
+                                <Text
+                                    style={styles.prviateText}
+                                    onPress={setInitlizeApp}
+                                >
+                                    이용약관에 동의하는 것으로 간주합니다.
+                                </Text>
+                            </View>
                         </View>
                     </View>
-                </View>
-            )}
+                )
+            }
         </>
     );
 };

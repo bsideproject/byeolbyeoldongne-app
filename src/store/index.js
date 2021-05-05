@@ -6,12 +6,14 @@ import geolocation from './geolocation';
 import search from './search';
 import location from './location';
 import review from './review';
+import user from './user';
 
 const rootReducer = combineReducers({
     geolocation,
     search,
     location,
     review,
+    user,
 });
 
 const store = createStore(

@@ -32,7 +32,7 @@ const Route = () => {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Main" headerMode="none">
+            <Stack.Navigator initialRouteName="Signin" headerMode="none">
                 <Stack.Screen
                     name="Signin"
                     component={SignInScreen}

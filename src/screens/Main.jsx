@@ -53,6 +53,7 @@ const Main = ({ navigation }) => {
                     town.data ? town.data.categoryGroupEnumsList : []
                 }
                 handleMoreButtonPress={handleMoreButtonPress}
+                handleWritePress={handleWritePress}
             />
             <SideBar
                 isVisible={openSidebar}

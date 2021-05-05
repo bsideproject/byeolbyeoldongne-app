@@ -86,27 +86,33 @@ const GoogleMap = ({ ...props }) => {
                 onMarkerDragEnd={() => console.log('dragend')}
             >
                 <Marker
+                    style={{ width: 10, height: 10 }}
                     coordinate={{
                         latitude: currentRegion.latitude,
                         longitude: currentRegion.longitude,
                     }}
                     // title={marker.title}
                     // description={marker.description}
-                    image={require('../../static/images/map/marker.png')}
-                />
+                >
+                    <Image
+                        style={styles.markerIcon}
+                        source={require('../../static/images/map/marker.png')}
+                    />
+                </Marker>
+
                 <Polyline
                     coordinates={
                         townLine
                             ? [
-                                  {
-                                      latitude: townLine.startLocation.lng,
-                                      longitude: townLine.startLocation.lat,
-                                  },
-                                  {
-                                      latitude: townLine.endLocation.lng,
-                                      longitude: townLine.endLocation.lat,
-                                  },
-                              ]
+                                {
+                                    latitude: townLine.startLocation.lng,
+                                    longitude: townLine.startLocation.lat,
+                                },
+                                {
+                                    latitude: townLine.endLocation.lng,
+                                    longitude: townLine.endLocation.lat,
+                                },
+                            ]
                             : []
                     }
                     strokeColor={theme.color.polyLine}
@@ -153,6 +159,10 @@ const styles = StyleSheet.create({
     currentLocationIcon: {
         width: 21,
         height: 21,
+    },
+    markerIcon: {
+        width: 40,
+        height: 65,
     },
 });
 
