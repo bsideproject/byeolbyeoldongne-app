@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import theme from '../../../context/theme';
 import CategoryButton from '../../Buttons/CategoryButton';
 import NoMessage from '../../Messages/NoMessage';
@@ -13,27 +14,44 @@ const BottomBar = ({
     handleWritePress,
     ...props
 }) => {
+    const { town } = useSelector((state) => state.location);
+
     const [selectedCategory, setSelectedCategory] = useState(null);
 
     return (
         <View style={styles.bottomBar}>
             <View style={styles.categories}>
-                {currentCategories.length ? (
-                    currentCategories.map((category) => {
-                        return (
-                            <CategoryButton
-                                key={category}
-                                category={category}
-                                onPress={() => setSelectedCategory(category)}
-                            />
-                        );
-                    })
-                ) : (
+                {town.error && (
                     <NoMessage
-                        text="이 동네는 가까운 편의시설이 많지 않네요"
+                        text="다시 한 번 시도해주세요."
                         imoji={require('../../../static/images/imoji/imoji_cry.png')}
                     />
                 )}
+                {town.pending && (
+                    <NoMessage
+                        text="로딩 중입니다...."
+                        imoji={require('../../../static/images/imoji/imoji_cry.png')}
+                    />
+                )}
+                {town.success &&
+                    (town.data.length ? (
+                        currentCategories.map((category) => {
+                            return (
+                                <CategoryButton
+                                    key={category}
+                                    category={category}
+                                    onPress={() =>
+                                        setSelectedCategory(category)
+                                    }
+                                />
+                            );
+                        })
+                    ) : (
+                        <NoMessage
+                            text="이 동네는 가까운 편의시설이 많지 않네요"
+                            imoji={require('../../../static/images/imoji/imoji_cry.png')}
+                        />
+                    ))}
             </View>
             <View style={styles.divider} />
             <View style={styles.evaluationBar}>

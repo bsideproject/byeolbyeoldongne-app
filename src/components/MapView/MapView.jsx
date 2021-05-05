@@ -42,10 +42,6 @@ const GoogleMap = ({ ...props }) => {
         mapRef.current.animateToRegion(newRegion);
     };
 
-    const onRegionChange = (region) => {
-        setCurrentRegion(region);
-    };
-
     const onCurrentLocationButtonPress = () => {
         if (regionType === regionTypes.GEOLOCATION) {
             setRegionType(regionTypes.ADDRESS);
@@ -82,7 +78,6 @@ const GoogleMap = ({ ...props }) => {
                 initialRegion={currentRegion}
                 style={styles.mapView}
                 provider={PROVIDER_GOOGLE}
-                onRegionChangeComplete={onRegionChange}
                 onMarkerDragEnd={() => console.log('dragend')}
             >
                 <Marker

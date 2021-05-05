@@ -15,7 +15,6 @@ const Main = ({ navigation }) => {
     const [openSidebar, setOpenSideBar] = useState(false);
 
     const { currentSearchText } = useSelector((state) => state.search);
-    const { town } = useSelector((state) => state.location);
     const { reviews, averagePoint } = useSelector((state) => state.review);
 
     const handleSearchBarPress = () => {
@@ -49,9 +48,6 @@ const Main = ({ navigation }) => {
             <BottomBar
                 averagePoint={averagePoint}
                 hasReview={reviews.data && reviews.data.length}
-                currentCategories={
-                    town.data ? town.data.categoryGroupEnumsList : []
-                }
                 handleMoreButtonPress={handleMoreButtonPress}
                 handleWritePress={handleWritePress}
             />
