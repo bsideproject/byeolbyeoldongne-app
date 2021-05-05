@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import {
+    Button,
+    Image,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+import { batch, useDispatch, useSelector } from 'react-redux';
 import theme from '../../../context/theme';
+import { fetchTownAsync } from '../../../store/location';
+import { fetchReviewAsync } from '../../../store/review';
 import CategoryButton from '../../Buttons/CategoryButton';
 import NoMessage from '../../Messages/NoMessage';
 import CategoryModal from './CategoryModal';
@@ -14,9 +23,24 @@ const BottomBar = ({
     handleWritePress,
     ...props
 }) => {
+    const dispatch = useDispatch();
+
     const { town } = useSelector((state) => state.location);
+    const { currentLocation } = useSelector((state) => state.search);
 
     const [selectedCategory, setSelectedCategory] = useState(null);
+
+    const reloadTown = () => {
+        batch(() => {
+            dispatch(
+                fetchTownAsync(
+                    currentLocation.latitude,
+                    currentLocation.longitude
+                )
+            );
+            dispatch(fetchReviewAsync(currentLocation.placeId));
+        });
+    };
 
     return (
         <View style={styles.bottomBar}>
@@ -25,7 +49,15 @@ const BottomBar = ({
                     <NoMessage
                         text="다시 한 번 시도해주세요."
                         imoji={require('../../../static/images/imoji/imoji_cry.png')}
-                    />
+                    >
+                        <TouchableOpacity onPress={reloadTown}>
+                            <View style={styles.gnbSearch}>
+                                <Text style={styles.gnbSearchText}>
+                                    다시 불러오기
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    </NoMessage>
                 )}
                 {town.pending && (
                     <NoMessage
@@ -215,6 +247,15 @@ const styles = StyleSheet.create({
     noReviewMessage: {
         flex: 1,
         alignItems: 'center',
+    },
+    gnbSearch: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingLeft: 20,
+    },
+    gnbSearchText: {
+        color: theme.color.main,
     },
 });
 

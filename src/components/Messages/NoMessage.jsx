@@ -2,11 +2,12 @@ import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import theme from '../../context/theme';
 
-const NoMessage = ({ text, imoji }) => {
+const NoMessage = ({ text, imoji, children }) => {
     return (
         <View style={styles.noMessage}>
             <Text style={styles.noMessageText}>{text}</Text>
             <Image style={styles.imojiIcon} source={imoji} />
+            {children}
         </View>
     );
 };

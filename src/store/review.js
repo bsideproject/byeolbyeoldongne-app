@@ -163,12 +163,11 @@ export default handleActions(
         [FETCH_REVIEWS.PENDING]: (state) => ({
             ...state,
             reviews: createPendingState(),
-            // reviews: createSuccessState(tempData),
         }),
         [FETCH_REVIEWS.SUCCESS]: (state, action) => {
             const reviews = action.payload.data.length
                 ? action.payload.data
-                : tempData;
+                : [];
             const renamed = renameKeys(reviews, snakeToCamel);
             const sorted = sortBy(
                 renamed,
@@ -182,10 +181,7 @@ export default handleActions(
         },
         [FETCH_REVIEWS.FAILURE]: (state, action) => ({
             ...state,
-            reviews: createSuccessState(
-                sortBy(tempData, (review) => review.createdAt).reverse()
-            ),
-            // reviews: createFailureState(action.payload),
+            reviews: createFailureState(action.payload),
         }),
         [SORT_BY_RECENT_REVIEWS]: (state) => {
             const sorted = sortBy(

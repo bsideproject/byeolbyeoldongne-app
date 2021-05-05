@@ -65,7 +65,7 @@ const Search = ({ navigation }) => {
                 newRecentKeywords
             );
         }
-        console.log(item.placeId);
+
         batch(() => {
             dispatch(setCurrentSearchText(searchText));
             dispatch(setCurrentLocation(item));
