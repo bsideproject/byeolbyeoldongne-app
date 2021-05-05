@@ -161,6 +161,8 @@ const styles = StyleSheet.create({
     headerView: {
         flex: 1,
         alignItems: 'center',
+        marginRight: -50,
+        marginLeft: -50,
     },
     headerText: {
         fontSize: theme.font.size.large,
