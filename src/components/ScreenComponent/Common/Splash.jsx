@@ -2,7 +2,7 @@ import React, { useState , useEffect } from 'react';
 import { View , StyleSheet , ImageBackground ,Text, Image } from 'react-native';
 
 
-const Splash = ({navigation}) => {
+const Splash = () => {
     return (
         <View style={styles.home}>           
             <ImageBackground

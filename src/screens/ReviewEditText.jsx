@@ -13,6 +13,8 @@ import theme from '../context/theme';
 import AddrPresenter from '../components/ScreenComponent/ReviewEdit/AddrPresenter';
 import ReviewEditHeader from '../components/Header/ReviewEditHeader';
 import  ReviewTextBallon  from '../components/ScreenComponent/ReviewEdit/ReviewTextBallon';
+import { useSelector } from 'react-redux';
+import { cos } from 'react-native-reanimated';
 
 const MAIN_REVIEW = 0 ;
 const GOOD_REVIEW = 1 ;
@@ -28,16 +30,17 @@ const ReviewEditTextScreen = ({ navigation , route }) => {
     const [ main , setMain] = useState("");
     const [ good , setGood] = useState("");
     const [ bad , setBad] = useState("");
+        
+    const { town } = useSelector((state) => state.location);
 
     const handlePressBack = () => {
         navigation.goBack();
     };
 
     const handlePressNext = ()=>{
-        //if(nextStep){
+        if(nextStep){
             navigation.navigate("ReviewEditPoint" , { main , good , bad  } );
-        //}
-        
+        }        
     }
     
     const defaultTextBallon = {        
@@ -108,7 +111,7 @@ const ReviewEditTextScreen = ({ navigation , route }) => {
                             enableNext={nextStep}
                         />              
                         <AddrPresenter
-                            AddrString={"서울 강남구 역삼동 93길"}
+                            AddrString={town.data == null ? "주소가 지정되지 않았습니다." : town.data.addressName}                           
                         />               
                         <ReviewTextBallon
                             setting={main_input}

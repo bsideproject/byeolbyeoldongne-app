@@ -7,7 +7,7 @@ import theme from '../../../context/theme';
 
 
 
-const AddrPresenter = ( { AddrString })=>{
+const AddrPresenter = ( { AddrString , onTest })=>{
 
     return (
         <TouchableNativeFeedback onPress={()=> Keyboard.dismiss()}>
@@ -22,7 +22,7 @@ const AddrPresenter = ( { AddrString })=>{
                 <View style={styles.containerAddr}> 
                     <Text style={styles.AddrText}>{AddrString}</Text>
                 </View>                           
-                <TouchableOpacity>
+                <TouchableOpacity onPress={onTest}>
                     <View style={styles.containerChngLocation}>                
                         <Text style={styles.ChngLocationText}>{'위치변경 > '}</Text>                
                     </View>
