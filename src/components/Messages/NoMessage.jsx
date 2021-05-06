@@ -6,7 +6,7 @@ const NoMessage = ({ text, imoji, children }) => {
     return (
         <View style={styles.noMessage}>
             <Text style={styles.noMessageText}>{text}</Text>
-            <Image style={styles.imojiIcon} source={imoji} />
+            {imoji && <Image style={styles.imojiIcon} source={imoji} />}
             {children}
         </View>
     );

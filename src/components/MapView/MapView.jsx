@@ -63,9 +63,14 @@ const GoogleMap = ({ ...props }) => {
     }, [latitude, longitude]);
 
     useEffect(() => {
-        dispatch(
-            fetchTownAsync(currentLocation.latitude, currentLocation.longitude)
-        );
+        if (currentLocation.placeId) {
+            dispatch(
+                fetchTownAsync(
+                    currentLocation.latitude,
+                    currentLocation.longitude
+                )
+            );
+        }
     }, [currentLocation]);
 
     return (

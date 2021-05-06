@@ -54,6 +54,7 @@ const Main = ({ navigation }) => {
                 }
                 handleMoreButtonPress={handleMoreButtonPress}
                 handleWritePress={handleWritePress}
+                handleSearchButtonPress={handleSearchBarPress}
             />
             <SideBar
                 isVisible={openSidebar}

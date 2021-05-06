@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Button,
-    Image,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import theme from '../../../context/theme';
 import { fetchTownAsync } from '../../../store/location';
@@ -21,6 +14,7 @@ const BottomBar = ({
     averagePoint,
     handleMoreButtonPress,
     handleWritePress,
+    handleSearchButtonPress,
     ...props
 }) => {
     const dispatch = useDispatch();
@@ -30,6 +24,7 @@ const BottomBar = ({
 
     const [selectedCategory, setSelectedCategory] = useState(null);
 
+    const isInit = !town.error && !town.success && !town.pending;
     const reloadTown = () => {
         batch(() => {
             dispatch(
@@ -41,10 +36,20 @@ const BottomBar = ({
             dispatch(fetchReviewAsync(currentLocation.placeId));
         });
     };
-
     return (
         <View style={styles.bottomBar}>
             <View style={styles.categories}>
+                {isInit && (
+                    <NoMessage text="동네를 검색해주세요.">
+                        <TouchableOpacity onPress={handleSearchButtonPress}>
+                            <View style={styles.gnbSearch}>
+                                <Text style={styles.gnbSearchText}>
+                                    동네 검색
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    </NoMessage>
+                )}
                 {town.error && (
                     <NoMessage
                         text="다시 한 번 시도해주세요."
