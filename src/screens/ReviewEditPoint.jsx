@@ -18,6 +18,7 @@ import SimpleModal from '../components/Modal';
 import { ReviewAPI } from '../module/ServerAPI';
 import { APIObjConverter } from '../module/Utility';
 import { useDispatch, useSelector } from 'react-redux';
+import PopUpModal from '../components/Popup';
 
 
 const POINT = Object.freeze( { 
@@ -40,18 +41,12 @@ const ReviewEditPointScreen = ({ navigation , route }) => {
     const [review , setRevieww] = useState(null);
 
     const [popResult , setPopResult] = useState(false);
-
-    const [reviewGeolocation , setReviewGeolocation] = useState(null);
-    const [reviewPlaceInfo , setReviewPlaceInfo] = useState(null);
-
-
-    const { reviewGeolcation } = useSelector((state) => state.geolocation);
-    const { reviewPlaceinfo } = useSelector((state) => state.search);
+  
+    const { coords, town } = useSelector((state) => state.location);
 
     useEffect(()=>{        
         //전달받은 Review를 세팅한다. 
-        const { main, good , bad  } = route.params;        
-        console.log(`${main} , ${good} , ${bad}`) ;    
+        const { main, good , bad  } = route.params;       
         setRevieww({main , good, bad});        
     }, []);
 
@@ -61,7 +56,7 @@ const ReviewEditPointScreen = ({ navigation , route }) => {
 
     const handlePressNext = async()=> {        
         const result = await writeReview();
-        console.log("저장중..");
+        console.log("리뷰 저장중..");
         
         if(result[0] == null){
             //오류 발생 
@@ -84,22 +79,23 @@ const ReviewEditPointScreen = ({ navigation , route }) => {
     }
 
     const writeReview = async() => {
+        const reviewedtown = town.data;
+        
         const data = {            
-            adress : "서울 강남구 역삼동 93길" ,
-            road : "93길" , 
-            cordX : 127.0469 ,
-            cordY : 37.504,
+            adress : reviewedtown.addressName ,
+            road : reviewedtown.roadAddress , 
+            cordX : reviewedtown.lng.toFixed(3) ,
+            cordY : reviewedtown.lat.toFixed(3),
             user_email : "bane87316@gamil.com" ,
             traffic ,
             convenience ,
             noise,
             safety ,
-            place : 11,
+            place : reviewedtown.placeId ,
             ...review
         }       
-        const cvtData = APIObjConverter.ByeolReview(data);
-        console.log(cvtData);        
-        const result = await ReviewAPI.AddReview(cvtData);
+      
+        const result = await ReviewAPI.AddReview(APIObjConverter.ByeolReview(data));
         return result;
     }
 
@@ -145,7 +141,7 @@ const ReviewEditPointScreen = ({ navigation , route }) => {
                     enableNext={nextStep}
                 />
                  <AddrPresenter
-                    AddrString={"서울 강남구 역삼동 93길"}
+                    AddrString={town.data == null ? "주소가 지정되지 않았습니다." : town.data.addressName}                    
                 />
                 <View style={styles.pointcontainer}>
                     <ReviewStarBallon
@@ -164,7 +160,7 @@ const ReviewEditPointScreen = ({ navigation , route }) => {
                         setting = {POINT.SAFETY} 
                         setExternValue = {loadReivewPoint}
                     />                    
-                </View>
+                </View>               
             </View>          
         </SafeAreaView>            
     );
