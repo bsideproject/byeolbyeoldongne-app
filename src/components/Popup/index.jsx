@@ -1,23 +1,28 @@
 import React, { useState } from "react";
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import theme from "../../context/theme";
 
-const PopUpModal = ({popModal , extenClose }) => {
+const PopUpModal = ({children, popModal , confirm }) => {
   
   return (   
       <Modal
         animationType="none"
         transparent={true}
-        visible={popModal}       
+        visible={popModal} 
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={extenClose}
-            >
-              <Text style={styles.textStyle}>확인</Text>
-            </Pressable>
+            <View style={styles.childContainer}>
+              {children}
+            </View>
+            <View style={styles.buttonContainer}>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={confirm}
+              >
+                <Text style={styles.textStyle}>확인</Text>
+              </Pressable>
+            </View>            
           </View>
         </View>
       </Modal>
@@ -26,16 +31,13 @@ const PopUpModal = ({popModal , extenClose }) => {
 
 const styles = StyleSheet.create({
   centeredView: {
-    flex: 1,
+    flex :1 , 
     justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
+    alignItems: "center",             
   },
   modalView: {
-    margin: 20,
     backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: 20,    
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -44,28 +46,39 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5 , 
+    width: "60%",
+    justifyContent : "flex-end",
+    paddingBottom : 1,
+    flex : 0.3,
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2
+  childContainer :{
+    flex : 0.7 ,
+    width : "100%",
+    justifyContent :"center" , 
+    alignItems : "center",
   },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
+  buttonContainer :{
+    flex : 0.25 ,   
+    width : "100%",
+  },  
+  button: {    
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    padding: 14,
+    elevation: 2 ,   
+    width : "100%",  
+  },  
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor : theme.font.search , 
+    width :"100%",
   },
   textStyle: {
     color: "white",
     fontWeight: "bold",
-    textAlign: "center"
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center"
-  }
+    textAlign: "center",
+    fontSize : 15,    
+  }  
 });
 
 export default PopUpModal;

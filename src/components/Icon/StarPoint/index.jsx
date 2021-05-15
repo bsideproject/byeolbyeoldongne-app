@@ -14,7 +14,7 @@ const StarPoint = ({ count, small }) => {
     if (typeof count !== 'number') return null;
 
     const stars = countStars(count);
-    console.log(count, stars);
+    
     const starStyle = small ? styles.smallStarIcon : styles.starIcon;
 
     return (

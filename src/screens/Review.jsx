@@ -53,6 +53,7 @@ const ReviewScreen = ({ navigation }) => {
     const targetReviews = reviews.data;
     const targetTown = town.data;
     const points = getPoints(targetReviews);
+    
     const reviewListWithPoints = targetReviews
         ? targetReviews.map((review) => {
             const averagePoint = round(

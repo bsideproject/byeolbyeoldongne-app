@@ -38,9 +38,9 @@ const ReviewEditTextScreen = ({ navigation , route }) => {
     };
 
     const handlePressNext = ()=>{
-        if(nextStep){
+        // if(nextStep){
             navigation.navigate("ReviewEditPoint" , { main , good , bad  } );
-        }        
+        //}        
     }
     
     const defaultTextBallon = {        
