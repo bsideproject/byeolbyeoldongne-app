@@ -41,7 +41,7 @@ const SignInScreen = ({ navigation }) => {
     const setConfig = () => {
         GoogleSignin.configure({
             webClientId:
-                '928982736163-e7hhl384hhfhnulnehvpu1u8vju8s2br.apps.googleusercontent.com',
+                '755160641851-dgbqqv1iq4q8314lfcrfaaleadumfi0v.apps.googleusercontent.com',
             offlineAccess: true,
             hostedDomain: '',
             forceConsentPrompt: true,

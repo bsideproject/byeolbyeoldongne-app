@@ -12,7 +12,7 @@ export const setUser = createAction(SET_USER, (user) => {
     };
 });
 
-// initial region: 강남 사거리
+//initialState
 const initialState = {
     user: null,
 };
